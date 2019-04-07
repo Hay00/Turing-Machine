@@ -2,8 +2,40 @@ package turing.machine;
 
 public class TuringMachine {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World");
+    private short cabecote;
+    private int[] fita;
+
+    public TuringMachine() {
+        fita = new int[999];
+        cabecote = 0;
     }
-    ta funcionando?
+
+    public short getCabecote() {
+        return cabecote;
+    }
+
+    public void setCabecote(short cabecote) {
+        this.cabecote = cabecote;
+    }
+
+    public void Inicializar() {
+
+    }
+
+    public void Ler() {
+
+    }
+
+    public void Escrever() {
+
+    }
+
+    public void Mover() {
+
+    }
+
+    public void Quando() {
+
+    }
+
 }
