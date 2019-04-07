@@ -2,24 +2,30 @@ package turing.machine;
 
 public class TuringMachine {
 
-    private short cabecote;
-    private int[] fita;
+    private static int cabecote;
+    private static String[] fita = new String[10];
 
-    public TuringMachine() {
-        fita = new int[999];
-        cabecote = 0;
-    }
-
-    public short getCabecote() {
+    public static int getCabecote() {
         return cabecote;
     }
 
-    public void setCabecote(short cabecote) {
-        this.cabecote = cabecote;
+    public static void setCabecote(int cabecote) {
+        TuringMachine.cabecote = cabecote;
     }
 
-    public void Inicializar() {
+    public static String[] getFita() {
+        return fita;
+    }
 
+    public static void setFita(String[] fita) {
+        TuringMachine.fita = fita;
+    }
+
+    public static void Inicializar() {
+        setCabecote(0);
+
+        fita[0] = ("*");
+        fita[9] = ("branco");
     }
 
     public void Ler() {
@@ -36,6 +42,12 @@ public class TuringMachine {
 
     public void Quando() {
 
+    }
+
+    public static void main(String[] args) {
+        Inicializar();
+
+        System.out.println(fita[getCabecote()] + " Zero");
     }
 
 }
