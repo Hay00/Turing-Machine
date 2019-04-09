@@ -23,8 +23,11 @@ public class TuringMachine {
 
     public static void Inicializar() {
         setCabecote(0);
-
         fita[0] = ("*");
+
+        for (int i = 1; i < 10; i++) {
+            fita[i] = ("A");
+        }
         fita[9] = ("branco");
     }
 
@@ -32,7 +35,7 @@ public class TuringMachine {
 
     }
 
-    public void Escrever() {
+    public void Alterar() {
 
     }
 
@@ -47,7 +50,9 @@ public class TuringMachine {
     public static void main(String[] args) {
         Inicializar();
 
-        System.out.println(fita[getCabecote()] + " Zero");
+        for (int count = 0; count < 10; count++) {
+            System.out.println(fita[count]);
+        }
     }
 
 }
