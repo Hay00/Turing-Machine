@@ -2,26 +2,27 @@ package turing.machine;
 
 public class TuringMachine {
 
-    private static int cabecote;
-    private static String[] fita = new String[10];
+    private int cabecote;
+    private String[] fita = new String[10];
+
 
     /*
      Inicio gets e sets
      */
-    public static int getCabecote() {
+    public int getCabecote() {
         return cabecote;
     }
 
-    public static void setCabecote(int cabecote) {
-        TuringMachine.cabecote = cabecote;
+    public void setCabecote(int cabecote) {
+        this.cabecote = cabecote;
     }
 
-    public static String[] getFita() {
+    public String[] getFita() {
         return fita;
     }
 
-    public static void setFita(String[] fita) {
-        TuringMachine.fita = fita;
+    public void setFita(String[] fita) {
+        this.fita = fita;
     }
     /*
      Final gets e sets
@@ -47,6 +48,7 @@ public class TuringMachine {
         String temp[] = getFita();
         int pos_cab = getCabecote();
         temp[pos_cab] = str;
+        setFita(temp);
     }
 
     public void Mover(String direcao) {
@@ -68,8 +70,9 @@ public class TuringMachine {
 
         // Printa os valores do vetor.
         System.out.println("Vetor da máquina:");
+        String[] fita_temp = maquina.getFita();
         for (int count = 0; count < 10; count++) {
-            System.out.println(fita[count]);
+            System.out.println(fita_temp[count]);
         }
 
         // Evitando desvios fora das condições impostas!
