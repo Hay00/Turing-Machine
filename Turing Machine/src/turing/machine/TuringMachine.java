@@ -7,6 +7,7 @@ public class TuringMachine {
     private int cabecote;
     private String estado = "";
     private char[] fita = new char[6];
+    private String[][] tabela = new String[6][7];
 
     /*
      Inicio gets e sets
@@ -157,26 +158,33 @@ public class TuringMachine {
         Scanner teclado = new Scanner(System.in);
         try {
             System.out.println("Insira um valor");
-            maquina.Inicializar(teclado.next().toCharArray());
-            String maq_estado = maquina.getEstado();
+
+            char[] entrada_teclado = teclado.next().toCharArray();
+            for (int count = 0; count < entrada_teclado.length; count++) {
+                if (entrada_teclado[count] != ('a') && entrada_teclado[count] != ('b')) {
+                    throw new RuntimeException("Caractéres diferentes de A e B!");
+                }
+            }
+            maquina.Inicializar(entrada_teclado);
+
             while (true) {
                 char[] a = maquina.getFita();
 
                 char maq_letra = maquina.Ler();
                 System.out.println("Cabeçote: " + maquina.getCabecote());
-                System.out.println("Estado atual: " + maq_estado);
+                System.out.println("Estado atual: " + maquina.getEstado());
                 for (int count = 0; count < a.length; count++) {
                     System.out.println("Array: " + a[count]);
                 }
-                if (maq_estado.equals("q0")) {
-                    maq_estado = maquina.q0(maq_letra);
-                } else if (maq_estado.equals("q1")) {
-                    maq_estado = maquina.q1(maq_letra);
-                } else if (maq_estado.equals("q2")) {
-                    maq_estado = maquina.q2(maq_letra);
-                } else if (maq_estado.equals("q3")) {
-                    maq_estado = maquina.q3(maq_letra);
-                } else if (maq_estado.equals("q4")) {
+                if (maquina.getEstado().equals("q0")) {
+                    maquina.setEstado(maquina.q0(maq_letra));
+                } else if (maquina.getEstado().equals("q1")) {
+                    maquina.setEstado(maquina.q1(maq_letra));
+                } else if (maquina.getEstado().equals("q2")) {
+                    maquina.setEstado(maquina.q2(maq_letra));
+                } else if (maquina.getEstado().equals("q3")) {
+                    maquina.setEstado(maquina.q3(maq_letra));
+                } else if (maquina.getEstado().equals("q4")) {
                     System.out.println(maquina.q4(maq_letra));
                     break;
                 }
