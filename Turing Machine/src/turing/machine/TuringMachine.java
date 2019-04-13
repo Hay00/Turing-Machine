@@ -1,10 +1,12 @@
 package turing.machine;
 
+import java.util.Scanner;
+
 public class TuringMachine {
 
     private int cabecote;
-    private String[] fita = new String[10];
-
+    private String estado = "";
+    private char[] fita = new char[6];
 
     /*
      Inicio gets e sets
@@ -17,37 +19,50 @@ public class TuringMachine {
         this.cabecote = cabecote;
     }
 
-    public String[] getFita() {
+    public char[] getFita() {
         return fita;
     }
 
-    public void setFita(String[] fita) {
+    public void setFita(char[] fita) {
         this.fita = fita;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     /*
      Final gets e sets
      */
-
-    public void Inicializar() {
-        setCabecote(0);
-        fita[0] = ("*");
-
-        for (int i = 1; i < 10; i++) {
-            fita[i] = ("A");
+    public void Inicializar(char[] entrada) {
+        if (entrada.length < 10) {
+            for (int count = 0; count < entrada.length; count++) {
+                fita[count + 1] = entrada[count];
+            }
+            setCabecote(0);
+            setEstado("q0");
+            fita[0] = ('*');
+            fita[5] = ('V');
+        } else {
+            throw new RuntimeException("Sua string contém mais de 6 caracteres!");
         }
-        fita[9] = ("branco");
+
     }
 
-    public String Ler() {
-        String temp[] = getFita();
-        int pos_cab = getCabecote();
-        return temp[pos_cab];
+    public char Ler() {
+        char temp[] = getFita();
+        int pos_cabecote = getCabecote();
+        return temp[pos_cabecote];
     }
 
-    public void Alterar(String str) {
-        String temp[] = getFita();
-        int pos_cab = getCabecote();
-        temp[pos_cab] = str;
+    public void Gravar(char str) {
+        char temp[] = getFita();
+        int pos_cabecote = getCabecote();
+        temp[pos_cabecote] = str;
         setFita(temp);
     }
 
@@ -61,37 +76,113 @@ public class TuringMachine {
         }
     }
 
-    public static void main(String[] args) {
-        // Objeto referente essa própria classe.
-        TuringMachine maquina = new TuringMachine();
-
-        // Inicializa a máquina.
-        maquina.Inicializar();
-
-        // Printa os valores do vetor.
-        System.out.println("Vetor da máquina:");
-        String[] fita_temp = maquina.getFita();
-        for (int count = 0; count < 10; count++) {
-            System.out.println(fita_temp[count]);
-        }
-
-        // Evitando desvios fora das condições impostas!
-        try {
-            System.out.println("\nLendo um valor: " + maquina.Ler());
-
-            System.out.println("\nMovendo o cabeçote para a direita!");
-
-            maquina.Mover("direita");
-            System.out.println("\nLendo um valor: " + maquina.Ler());
-
-            System.out.println("\nMovendo o cabeçote para a esquerda!");
-
-            maquina.Mover("esquerda");
-
-            System.out.println("\nLendo um valor: " + maquina.Ler());
-        } catch (RuntimeException e) {
-            System.out.println("\n\nOcorreu um erro! : " + e);
+    public String q0(char palavra) {
+        if (palavra == '*') {
+            Gravar('*');
+            Mover("direita");
+            return "q0";
+        } else if (palavra == 'B') {
+            Gravar('B');
+            Mover("direita");
+            return "q3";
+        } else if (palavra == 'a') {
+            Gravar('A');
+            Mover("direita");
+            return "q1";
+        } else if (palavra == 'V') {
+            Gravar('V');
+            Mover("direita");
+            return "q4";
+        } else {
+            throw new RuntimeException("Palavra incorreta!");
         }
     }
 
+    public String q1(char palavra) {
+        if (palavra == 'a') {
+            Gravar('a');
+            Mover("direita");
+            return "q1";
+        } else if (palavra == 'B') {
+            Gravar('B');
+            Mover("direita");
+            return "q1";
+        } else if (palavra == 'b') {
+            Gravar('B');
+            Mover("esquerda");
+            return "q2";
+        } else {
+            throw new RuntimeException("Palavra incorreta!");
+        }
+    }
+
+    public String q2(char palavra) {
+        if (palavra == 'a') {
+            Gravar('a');
+            Mover("esquerda");
+            return "q2";
+        } else if (palavra == 'B') {
+            Gravar('B');
+            Mover("esquerda");
+            return "q2";
+        } else if (palavra == 'A') {
+            Gravar('A');
+            Mover("direita");
+            return "q0";
+        } else {
+            throw new RuntimeException("Palavra incorreta!");
+        }
+    }
+
+    public String q3(char palavra) {
+        if (palavra == 'B') {
+            Gravar('B');
+            Mover("direita");
+            return "q3";
+        } else if (palavra == 'V') {
+            Gravar('V');
+            Mover("esquerda");
+            return "q4";
+        } else {
+            throw new RuntimeException("Palavra incorreta!");
+        }
+    }
+
+    public String q4(char palavra) {
+        return "Estado de Aceitação!";
+    }
+
+    public static void main(String[] args) {
+        TuringMachine maquina = new TuringMachine();
+        Scanner teclado = new Scanner(System.in);
+        try {
+            System.out.println("Insira um valor");
+            maquina.Inicializar(teclado.next().toCharArray());
+            String maq_estado = maquina.getEstado();
+            while (true) {
+                char[] a = maquina.getFita();
+
+                char maq_letra = maquina.Ler();
+                System.out.println("Cabeçote: " + maquina.getCabecote());
+                System.out.println("Estado atual: " + maq_estado);
+                for (int count = 0; count < a.length; count++) {
+                    System.out.println("Array: " + a[count]);
+                }
+                if (maq_estado.equals("q0")) {
+                    maq_estado = maquina.q0(maq_letra);
+                } else if (maq_estado.equals("q1")) {
+                    maq_estado = maquina.q1(maq_letra);
+                } else if (maq_estado.equals("q2")) {
+                    maq_estado = maquina.q2(maq_letra);
+                } else if (maq_estado.equals("q3")) {
+                    maq_estado = maquina.q3(maq_letra);
+                } else if (maq_estado.equals("q4")) {
+                    System.out.println(maquina.q4(maq_letra));
+                    break;
+                }
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        }
+    }
 }
