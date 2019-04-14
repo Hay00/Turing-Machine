@@ -1,13 +1,13 @@
 package turing.machine;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class TuringMachine {
 
     private int cabecote;
     private String estado = "";
     private char[] fita = new char[15];
-    private String[][] tabela = new String[6][7];
+    ArrayList<String> tabela = new ArrayList<>();
     private final String DIREITA = "direita";
     private final String ESQUERDA = "esquerda";
     private final char BRANCO = 'β';
@@ -84,22 +84,25 @@ public class TuringMachine {
         }
     }
 
+    public void gravarAcao(String estado, char letra, String direcao) {
+        Gravar(letra);
+        Mover(direcao);
+        String temp_concat = (estado + "," + letra + "," + direcao);
+        tabela.add(temp_concat);
+    }
+
     public String q0(char palavra) {
         if (palavra == '*') {
-            Gravar('*');
-            Mover(DIREITA);
+            gravarAcao("q0", '*', DIREITA);
             return "q0";
         } else if (palavra == 'B') {
-            Gravar('B');
-            Mover(DIREITA);
+            gravarAcao("q3", 'B', DIREITA);
             return "q3";
         } else if (palavra == 'a') {
-            Gravar('A');
-            Mover(DIREITA);
+            gravarAcao("q1", 'A', DIREITA);
             return "q1";
         } else if (palavra == BRANCO) {
-            Gravar(BRANCO);
-            Mover(DIREITA);
+            gravarAcao("q4", BRANCO, DIREITA);
             return "q4";
         }
         return "qe";
@@ -107,16 +110,13 @@ public class TuringMachine {
 
     public String q1(char palavra) {
         if (palavra == 'a') {
-            Gravar('a');
-            Mover(DIREITA);
+            gravarAcao("q1", 'a', DIREITA);
             return "q1";
         } else if (palavra == 'B') {
-            Gravar('B');
-            Mover(DIREITA);
+            gravarAcao("q1", 'B', DIREITA);
             return "q1";
         } else if (palavra == 'b') {
-            Gravar('B');
-            Mover(ESQUERDA);
+            gravarAcao("q2", 'B', ESQUERDA);
             return "q2";
         }
         return "qe";
@@ -124,16 +124,13 @@ public class TuringMachine {
 
     public String q2(char palavra) {
         if (palavra == 'a') {
-            Gravar('a');
-            Mover(ESQUERDA);
+            gravarAcao("q2", 'a', ESQUERDA);
             return "q2";
         } else if (palavra == 'B') {
-            Gravar('B');
-            Mover(ESQUERDA);
+            gravarAcao("q2", 'B', ESQUERDA);
             return "q2";
         } else if (palavra == 'A') {
-            Gravar('A');
-            Mover(DIREITA);
+            gravarAcao("q0", 'A', DIREITA);
             return "q0";
         }
         return "qe";
@@ -141,12 +138,10 @@ public class TuringMachine {
 
     public String q3(char palavra) {
         if (palavra == 'B') {
-            Gravar('B');
-            Mover(DIREITA);
+            gravarAcao("q3", 'B', DIREITA);
             return "q3";
         } else if (palavra == BRANCO) {
-            Gravar(BRANCO);
-            Mover(ESQUERDA);
+            gravarAcao("q4", BRANCO, ESQUERDA);
             return "q4";
         }
         return "qe";
@@ -164,12 +159,16 @@ public class TuringMachine {
         char maq_letra = Ler();
         if (getEstado().equals("q0")) {
             setEstado(q0(maq_letra));
+
         } else if (getEstado().equals("q1")) {
             setEstado(q1(maq_letra));
+
         } else if (getEstado().equals("q2")) {
             setEstado(q2(maq_letra));
+
         } else if (getEstado().equals("q3")) {
             setEstado(q3(maq_letra));
+
         } else if (getEstado().equals("q4")) {
             throw new RuntimeException("inf");
         } else if (getEstado().equals("qe")) {

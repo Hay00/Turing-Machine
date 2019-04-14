@@ -5,8 +5,10 @@
  */
 package turing.machine;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import turing.messages.GUIMessage;
 
@@ -19,6 +21,7 @@ public class Tela extends javax.swing.JFrame {
     private DefaultListModel list_fita;
     private DefaultListModel list_cabecote;
     static TuringMachine maquina = new TuringMachine();
+    private DefaultListCellRenderer renderer;
 
     /**
      * Creates new form Tela
@@ -28,8 +31,15 @@ public class Tela extends javax.swing.JFrame {
 
         list_fita = new DefaultListModel();
         list_cabecote = new DefaultListModel();
+
         jlFita.setModel(list_fita);
         jlCabecote.setModel(list_cabecote);
+
+        renderer = (DefaultListCellRenderer) jlFita.getCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        renderer = (DefaultListCellRenderer) jlCabecote.getCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
     }
 
     /**
@@ -195,15 +205,19 @@ public class Tela extends javax.swing.JFrame {
     public void start() {
         try {
             populateLists();
+            populateTable();
             maquina.executarMaquina();
         } catch (RuntimeException e) {
             if (e.toString().equals("java.lang.RuntimeException: error")) {
-                GUIMessage.error("Houve um erro no programa");
+                GUIMessage.error("Palavra rejeitada!");
                 jbProximo.setEnabled(false);
             }
             if (e.toString().equals("java.lang.RuntimeException: inf")) {
                 GUIMessage.inf("O Programa entrou em estado de aceitação!");
                 jbProximo.setEnabled(false);
+                for (int count = 0; count < maquina.tabela.size(); count++) {
+                    System.out.println(count + " String " + maquina.tabela.get(count));
+                }
             }
         }
     }
@@ -225,6 +239,16 @@ public class Tela extends javax.swing.JFrame {
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
         model.setRowCount(0);
+//model.addRow(new Object[]{});
+        ArrayList temp_tabela = maquina.tabela;
+        for (int i = 0; i < temp_tabela.size(); i++) {
+            String a = maquina.tabela.get(i);
+            System.out.println("q" + i);
+            if (a.startsWith("q" + i) && a.contains("a")) {
+                System.out.println(a);
+            }
+
+        }
     }
 
     /**
