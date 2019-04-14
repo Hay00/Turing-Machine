@@ -6,7 +6,9 @@
 package turing.machine;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import turing.messages.GUIMessage;
 
 /**
  *
@@ -16,7 +18,7 @@ public class Tela extends javax.swing.JFrame {
 
     private DefaultListModel list_fita;
     private DefaultListModel list_cabecote;
-    TuringMachine maquina = new TuringMachine();
+    static TuringMachine maquina = new TuringMachine();
 
     /**
      * Creates new form Tela
@@ -42,13 +44,16 @@ public class Tela extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jtfCaracteres = new javax.swing.JTextField();
-        jbInicio = new javax.swing.JButton();
+        jbInserir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlFita = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlCabecote = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtTabela = new javax.swing.JTable();
+        jbProximo = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -58,11 +63,12 @@ public class Tela extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Turing Machine");
 
-        jbInicio.setText("Iniciar");
-        jbInicio.addActionListener(new java.awt.event.ActionListener() {
+        jbInserir.setText("Inserir");
+        jbInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbInicioActionPerformed(evt);
+                jbInserirActionPerformed(evt);
             }
         });
 
@@ -98,86 +104,107 @@ public class Tela extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtTabela.setOpaque(false);
         jtTabela.setRowSelectionAllowed(false);
         jtTabela.setShowHorizontalLines(false);
+        jtTabela.setShowVerticalLines(false);
+        jtTabela.getTableHeader().setResizingAllowed(false);
+        jtTabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(jtTabela);
+
+        jbProximo.setText("Mover");
+        jbProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbProximoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setText("Turing Machine");
+
+        jLabel2.setText("Sequencia de Caractéres:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jtfCaracteres))
+                        .addGap(152, 152, 152)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(212, 212, 212))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtfCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbInicio)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbProximo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 35, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbInicio))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(85, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfCaracteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbInserir)
+                            .addComponent(jbProximo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInicioActionPerformed
+    private void jbInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInserirActionPerformed
         maquina.Inicializar(jtfCaracteres.getText().toCharArray());
-        executarMaquina();
-        jbInicio.setEnabled(false);
-    }//GEN-LAST:event_jbInicioActionPerformed
+        jbInserir.setEnabled(false);
+        jtfCaracteres.setEditable(false);
+        start();
+    }//GEN-LAST:event_jbInserirActionPerformed
 
-    public void executarMaquina() {
-        populateLists();
+    private void jbProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProximoActionPerformed
+        start();
+    }//GEN-LAST:event_jbProximoActionPerformed
+
+    public void start() {
         try {
-            while (true) {
-
-                Thread.sleep(100);
-                char[] a = maquina.getFita();
-                char maq_letra = maquina.Ler();
-                System.out.println("Cabeçote: " + maquina.getCabecote());
-                System.out.println("Estado atual: " + maquina.getEstado());
-                for (int count = 0; count < a.length; count++) {
-                    System.out.println("Array: " + a[count]);
-                }
-                if (maquina.getEstado().equals("q0")) {
-                    maquina.setEstado(maquina.q0(maq_letra));
-                } else if (maquina.getEstado().equals("q1")) {
-                    maquina.setEstado(maquina.q1(maq_letra));
-                } else if (maquina.getEstado().equals("q2")) {
-                    maquina.setEstado(maquina.q2(maq_letra));
-                } else if (maquina.getEstado().equals("q3")) {
-                    maquina.setEstado(maquina.q3(maq_letra));
-                } else if (maquina.getEstado().equals("q4")) {
-                    System.out.println(maquina.q4(maq_letra));
-                    break;
-                } else {
-                    System.out.println(maquina.qe(maq_letra));
-                    break;
-                }
+            populateLists();
+            maquina.executarMaquina();
+        } catch (RuntimeException e) {
+            if (e.toString().equals("java.lang.RuntimeException: error")) {
+                GUIMessage.error("Houve um erro no programa");
+                jbProximo.setEnabled(false);
             }
-        } catch (InterruptedException e) {
-
+            if (e.toString().equals("java.lang.RuntimeException: inf")) {
+                GUIMessage.inf("O Programa entrou em estado de aceitação!");
+                jbProximo.setEnabled(false);
+            }
         }
     }
 
@@ -197,7 +224,6 @@ public class Tela extends javax.swing.JFrame {
 
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
-
         model.setRowCount(0);
     }
 
@@ -230,6 +256,7 @@ public class Tela extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Tela().setVisible(true);
             }
@@ -237,12 +264,15 @@ public class Tela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JButton jbInicio;
+    private javax.swing.JButton jbInserir;
+    private javax.swing.JButton jbProximo;
     private javax.swing.JList<String> jlCabecote;
     private javax.swing.JList<String> jlFita;
     private javax.swing.JTable jtTabela;

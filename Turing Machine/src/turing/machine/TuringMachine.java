@@ -160,27 +160,21 @@ public class TuringMachine {
         return "Palavra Rejeitada!";
     }
 
-    public static void main(String[] args) {
-        TuringMachine maquina = new TuringMachine();
-        Scanner teclado = new Scanner(System.in);
-
-        try {
-            System.out.println("Insira uma palavra:");
-
-            char[] entrada_teclado = teclado.next().toCharArray();
-            teclado.close();
-            for (int count = 0; count < entrada_teclado.length; count++) {
-                if (entrada_teclado[count] != ('a') && entrada_teclado[count] != ('b')) {
-                    throw new RuntimeException("Caractéres diferentes de A e B!");
-                }
-            }
-            maquina.Inicializar(entrada_teclado);
-
-            while (true) {
-
-            }
-        } catch (RuntimeException e) {
-            System.out.println(e);
+    public void executarMaquina() {
+        char maq_letra = Ler();
+        if (getEstado().equals("q0")) {
+            setEstado(q0(maq_letra));
+        } else if (getEstado().equals("q1")) {
+            setEstado(q1(maq_letra));
+        } else if (getEstado().equals("q2")) {
+            setEstado(q2(maq_letra));
+        } else if (getEstado().equals("q3")) {
+            setEstado(q3(maq_letra));
+        } else if (getEstado().equals("q4")) {
+            throw new RuntimeException("inf");
+        } else if (getEstado().equals("qe")) {
+            throw new RuntimeException("error");
         }
     }
+
 }
