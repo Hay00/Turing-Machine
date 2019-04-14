@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TuringMachine",
+            "request": "launch",
+            "mainClass": "turing.machine.TuringMachine"
+        }
+    ]
+}
