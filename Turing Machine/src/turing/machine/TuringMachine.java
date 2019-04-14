@@ -156,10 +156,12 @@ public class TuringMachine {
     public static void main(String[] args) {
         TuringMachine maquina = new TuringMachine();
         Scanner teclado = new Scanner(System.in);
+        
         try {
             System.out.println("Insira um valor");
-
+        
             char[] entrada_teclado = teclado.next().toCharArray();
+            teclado.close();
             for (int count = 0; count < entrada_teclado.length; count++) {
                 if (entrada_teclado[count] != ('a') && entrada_teclado[count] != ('b')) {
                     throw new RuntimeException("Caractéres diferentes de A e B!");
