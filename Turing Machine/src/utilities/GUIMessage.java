@@ -1,4 +1,4 @@
-package turing.messages;
+package utilities;
 
 import javax.swing.JOptionPane;
 

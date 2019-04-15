@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turing.machine;
+package turing;
 
-import java.util.ArrayList;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import turing.messages.GUIMessage;
+import utilities.GUIMessage;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Tela extends javax.swing.JFrame {
 
     private DefaultListModel list_fita;
     private DefaultListModel list_cabecote;
-    static TuringMachine maquina = new TuringMachine();
+    static TuringMachine maquina;
     private DefaultListCellRenderer renderer;
 
     /**
@@ -28,7 +27,7 @@ public class Tela extends javax.swing.JFrame {
      */
     public Tela() {
         initComponents();
-
+        maquina = new TuringMachine();
         list_fita = new DefaultListModel();
         list_cabecote = new DefaultListModel();
 
@@ -204,9 +203,9 @@ public class Tela extends javax.swing.JFrame {
 
     public void start() {
         try {
+            maquina.executarMaquina();
             populateLists();
             populateTable();
-            maquina.executarMaquina();
         } catch (RuntimeException e) {
             if (e.toString().equals("java.lang.RuntimeException: error")) {
                 GUIMessage.error("Palavra rejeitada!");
@@ -215,9 +214,6 @@ public class Tela extends javax.swing.JFrame {
             if (e.toString().equals("java.lang.RuntimeException: inf")) {
                 GUIMessage.inf("O Programa entrou em estado de aceitação!");
                 jbProximo.setEnabled(false);
-                for (int count = 0; count < maquina.tabela.size(); count++) {
-                    System.out.println(count + " String " + maquina.tabela.get(count));
-                }
             }
         }
     }
@@ -239,15 +235,15 @@ public class Tela extends javax.swing.JFrame {
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
         model.setRowCount(0);
-//model.addRow(new Object[]{});
-        ArrayList temp_tabela = maquina.tabela;
-        for (int i = 0; i < temp_tabela.size(); i++) {
-            String a = maquina.tabela.get(i);
-            System.out.println("q" + i);
-            if (a.startsWith("q" + i) && a.contains("a")) {
-                System.out.println(a);
-            }
-
+        String[][] temp_historico = maquina.getHistorico();
+        for (int count = 0; count < 5; count++) {
+            model.addRow(new Object[]{"q" + count,
+                temp_historico[count][0],
+                temp_historico[count][1],
+                temp_historico[count][2],
+                temp_historico[count][3],
+                temp_historico[count][4],
+                temp_historico[count][5]});
         }
     }
 
