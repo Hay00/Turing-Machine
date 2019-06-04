@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turing;
+package gui;
 
+import code.TuringMachine;
+import code.Funcao;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
@@ -22,6 +26,8 @@ public class MainScreen extends javax.swing.JFrame {
     static TuringMachine maquina;
     private DefaultListCellRenderer renderer;
 
+    private List<Funcao> listaFuncoes;
+
     /**
      * Creates new form Tela
      */
@@ -30,14 +36,16 @@ public class MainScreen extends javax.swing.JFrame {
         maquina = new TuringMachine();
         list_fita = new DefaultListModel();
         list_cabecote = new DefaultListModel();
+//
+//        //jlFita.setModel(list_fita);
+//        // jlCabecote.setModel(list_cabecote);
+//        jbLimparFita.setEnabled(false);
+//        //renderer = (DefaultListCellRenderer) jlFita.getCellRenderer();
+//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+//        //renderer = (DefaultListCellRenderer) jlCabecote.getCellRenderer();
+//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        //jlFita.setModel(list_fita);
-        // jlCabecote.setModel(list_cabecote);
-        jbLimparFita.setEnabled(false);
-        //renderer = (DefaultListCellRenderer) jlFita.getCellRenderer();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-        //renderer = (DefaultListCellRenderer) jlCabecote.getCellRenderer();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        listaFuncoes = new ArrayList();
 
     }
 
@@ -55,15 +63,13 @@ public class MainScreen extends javax.swing.JFrame {
         jtTabela = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtFita = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jpFita = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jtfInserirFita = new javax.swing.JTextField();
-        jbInserirFita = new javax.swing.JButton();
-        jbLimparFita = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        jpBuscas = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jtfBuscarFrase = new javax.swing.JTextField();
+        jbBuscar = new javax.swing.JButton();
         jpFuncoes = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jbTelaFuncao = new javax.swing.JButton();
@@ -74,11 +80,6 @@ public class MainScreen extends javax.swing.JFrame {
         jbTelaEstado = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
-        jpBuscas = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jtfBuscarFrase = new javax.swing.JTextField();
-        jbBuscar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jpAlfabeto = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -87,11 +88,19 @@ public class MainScreen extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         jScrollPane6 = new javax.swing.JScrollPane();
         jList4 = new javax.swing.JList<>();
+        jbInserirAlfabeto = new javax.swing.JButton();
+        jbDefinirAlfabetoAuxiliar = new javax.swing.JButton();
+        jpFita = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jtfInserirFita = new javax.swing.JTextField();
+        jbInserirFita = new javax.swing.JButton();
+        jbLimparFita = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Turing Machine");
 
-        jpTuringMachine.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jpTuringMachine.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jtTabela.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtTabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -133,10 +142,9 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel5.setText("Tabela de Transições:");
 
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtFita.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtFita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null}
             },
             new String [] {
@@ -158,64 +166,43 @@ public class MainScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowSelectionAllowed(false);
-        jTable1.setShowHorizontalLines(false);
-        jScrollPane5.setViewportView(jTable1);
+        jtFita.setRowSelectionAllowed(false);
+        jtFita.setShowHorizontalLines(false);
+        jtFita.setShowVerticalLines(false);
+        jScrollPane5.setViewportView(jtFita);
 
         jLabel3.setText("Fita:");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Turing Machine");
 
-        jpFita.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jpBuscas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Inserir Caractéres na Fita:");
+        jLabel4.setText("Buscar uma frase na fita");
 
-        jbInserirFita.setText("Inserir");
-        jbInserirFita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbInserirFitaActionPerformed(evt);
-            }
-        });
+        jbBuscar.setText("Buscar");
 
-        jbLimparFita.setText("Limpar");
-        jbLimparFita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbLimparFitaActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel8.setText("Fita");
-
-        javax.swing.GroupLayout jpFitaLayout = new javax.swing.GroupLayout(jpFita);
-        jpFita.setLayout(jpFitaLayout);
-        jpFitaLayout.setHorizontalGroup(
-            jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpFitaLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpBuscasLayout = new javax.swing.GroupLayout(jpBuscas);
+        jpBuscas.setLayout(jpBuscasLayout);
+        jpBuscasLayout.setHorizontalGroup(
+            jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBuscasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfInserirFita)
-                    .addGroup(jpFitaLayout.createSequentialGroup()
-                        .addComponent(jbInserirFita)
-                        .addGap(80, 80, 80)
-                        .addComponent(jbLimparFita)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jtfBuscarFrase, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                    .addComponent(jbBuscar))
+                .addContainerGap())
         );
-        jpFitaLayout.setVerticalGroup(
-            jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFitaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+        jpBuscasLayout.setVerticalGroup(
+            jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBuscasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfInserirFita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbInserirFita)
-                    .addComponent(jbLimparFita))
+                .addComponent(jtfBuscarFrase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbBuscar)
                 .addContainerGap())
         );
 
@@ -227,39 +214,36 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel1)
-                            .addComponent(jpFita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25))
+                        .addGap(0, 144, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(170, 170, 170))
+                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
+                        .addComponent(jpBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jpTuringMachineLayout.createSequentialGroup()
                         .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jpTuringMachineLayout.setVerticalGroup(
             jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpTuringMachineLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addComponent(jpFita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 22, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jpFuncoes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -301,6 +285,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel7.setText("Estados");
 
         jbTelaEstado.setText("Inserir");
+        jbTelaEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbTelaEstadoActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(jList2);
 
@@ -328,42 +317,6 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jpBuscas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel4.setText("Buscar uma frase na fita");
-
-        jbBuscar.setText("Buscar");
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setText("Buscas");
-
-        javax.swing.GroupLayout jpBuscasLayout = new javax.swing.GroupLayout(jpBuscas);
-        jpBuscas.setLayout(jpBuscasLayout);
-        jpBuscasLayout.setHorizontalGroup(
-            jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBuscasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4)
-                    .addComponent(jtfBuscarFrase)
-                    .addComponent(jbBuscar)
-                    .addComponent(jLabel9))
-                .addContainerGap())
-        );
-        jpBuscasLayout.setVerticalGroup(
-            jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBuscasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfBuscarFrase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbBuscar)
-                .addContainerGap())
-        );
-
         jpAlfabeto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -377,75 +330,138 @@ public class MainScreen extends javax.swing.JFrame {
 
         jScrollPane6.setViewportView(jList4);
 
+        jbInserirAlfabeto.setText("Inserir");
+
+        jbDefinirAlfabetoAuxiliar.setText("Modificar");
+
         javax.swing.GroupLayout jpAlfabetoLayout = new javax.swing.GroupLayout(jpAlfabeto);
         jpAlfabeto.setLayout(jpAlfabetoLayout);
         jpAlfabetoLayout.setHorizontalGroup(
             jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel12)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addGap(130, 130, 130)
+                .addComponent(jLabel10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlfabetoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jbInserirAlfabeto)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbDefinirAlfabetoAuxiliar)
+                    .addComponent(jLabel12))
+                .addGap(40, 40, 40))
         );
         jpAlfabetoLayout.setVerticalGroup(
             jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel10)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbDefinirAlfabetoAuxiliar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbInserirAlfabeto)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+
+        jpFita.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setText("Inserir Caractéres na Fita:");
+
+        jbInserirFita.setText("Inserir");
+        jbInserirFita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbInserirFitaActionPerformed(evt);
+            }
+        });
+
+        jbLimparFita.setText("Limpar");
+        jbLimparFita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparFitaActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setText("Fita");
+
+        javax.swing.GroupLayout jpFitaLayout = new javax.swing.GroupLayout(jpFita);
+        jpFita.setLayout(jpFitaLayout);
+        jpFitaLayout.setHorizontalGroup(
+            jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFitaLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfInserirFita, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpFitaLayout.createSequentialGroup()
+                        .addComponent(jbInserirFita)
+                        .addGap(80, 80, 80)
+                        .addComponent(jbLimparFita))
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jpFitaLayout.setVerticalGroup(
+            jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFitaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtfInserirFita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpFitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbInserirFita)
+                    .addComponent(jbLimparFita))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpFuncoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpBuscas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpAlfabeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpFita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpTuringMachine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jpTuringMachine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jpFita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jpEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jpFuncoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpAlfabeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpTuringMachine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jpAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jpEstados, jpFuncoes});
@@ -465,6 +481,11 @@ public class MainScreen extends javax.swing.JFrame {
     private void jbLimparFitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparFitaActionPerformed
         start();
     }//GEN-LAST:event_jbLimparFitaActionPerformed
+
+    private void jbTelaEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTelaEstadoActionPerformed
+        CreateState telaCriarEstado = new CreateState(null, rootPaneCheckingEnabled, listaFuncoes);
+        telaCriarEstado.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jbTelaEstadoActionPerformed
 
     public void start() {
         try {
@@ -562,7 +583,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
@@ -573,8 +593,9 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbDefinirAlfabetoAuxiliar;
+    private javax.swing.JButton jbInserirAlfabeto;
     private javax.swing.JButton jbInserirFita;
     private javax.swing.JButton jbLimparFita;
     private javax.swing.JButton jbTelaEstado;
@@ -585,6 +606,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jpFita;
     private javax.swing.JPanel jpFuncoes;
     private javax.swing.JPanel jpTuringMachine;
+    private javax.swing.JTable jtFita;
     private javax.swing.JTable jtTabela;
     private javax.swing.JTextField jtfBuscarFrase;
     private javax.swing.JTextField jtfInserirFita;

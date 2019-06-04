@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turing;
+package gui;
+
+import code.Funcao;
+import java.util.List;
 
 /**
  *
@@ -11,10 +14,13 @@ package turing;
  */
 public class CreateState extends javax.swing.JFrame {
 
+    
+    private List<Funcao> listaFuncoes;
+    
     /**
      * Creates new form CreateState
      */
-    public CreateState() {
+    public CreateState(java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes) {
         initComponents();
     }
 
@@ -34,7 +40,7 @@ public class CreateState extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jbCriarEstado = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -95,6 +101,7 @@ public class CreateState extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -127,7 +134,6 @@ public class CreateState extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateState().setVisible(true);
             }
         });
     }

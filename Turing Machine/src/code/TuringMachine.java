@@ -1,4 +1,4 @@
-package turing;
+package code;
 
 import utilities.Formatting;
 

@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turing;
+package gui;
+
+import java.util.List;
+import code.Funcao;
 
 /**
  *
@@ -15,6 +18,7 @@ public class CreateFunction extends javax.swing.JFrame {
      * Creates new form CreateFunction
      */
     public CreateFunction() {
+        
         initComponents();
     }
 
@@ -110,10 +114,9 @@ public class CreateFunction extends javax.swing.JFrame {
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbSelecProxEstado)
-                    .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbSelecEscrita)
-                        .addComponent(jLabel10))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbSelecEscrita)
+                    .addComponent(jLabel10)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(jpFuncLayout.createSequentialGroup()
