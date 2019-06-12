@@ -5,22 +5,26 @@
  */
 package gui;
 
+import code.AlfabetoTotal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Vinicios
  */
-public class CreateState extends javax.swing.JDialog {
+public class AddAlphabet extends javax.swing.JDialog {
 
-    private List<String> listaEstados;
+    private AlfabetoTotal alfabetos;
+    private List<String> listaAlfabetos;
 
     /**
-     * Creates new form CreateState
+     * Creates new form AddAlphabet
      */
-    public CreateState(java.awt.Frame parent, boolean modal, List<String> listaEstados) {
+    public AddAlphabet(java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
         super(parent, modal);
-        this.listaEstados = listaEstados;
+        this.alfabetos = alfabetos;
+        this.listaAlfabetos = new ArrayList();
         initComponents();
     }
 
@@ -34,28 +38,25 @@ public class CreateState extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jtfNomeEstado = new javax.swing.JTextField();
-        jbEstadoAceitacao = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jbCriarEstado = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jtfLetra = new javax.swing.JTextField();
+        jbAdicionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Criar Estado");
+        setTitle("Adicionar Alfabeto");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel11.setText("Inserir Estado");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
+        jLabel1.setText("Adicionar Alfabeto");
 
-        jbEstadoAceitacao.setText("Estado de Aceitação");
+        jLabel2.setText("Insira um Letra");
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
-        jLabel7.setText("Criar Estado");
-
-        jbCriarEstado.setText("Criar");
-        jbCriarEstado.addActionListener(new java.awt.event.ActionListener() {
+        jbAdicionar.setText("Adicionar");
+        jbAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCriarEstadoActionPerformed(evt);
+                jbAdicionarActionPerformed(evt);
             }
         });
 
@@ -66,26 +67,23 @@ public class CreateState extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel11)
-                    .addComponent(jtfNomeEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbEstadoAceitacao)
-                    .addComponent(jbCriarEstado))
-                .addGap(16, 16, 16))
+                    .addComponent(jbAdicionar)
+                    .addComponent(jtfLetra, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfNomeEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbEstadoAceitacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbCriarEstado)
+                .addComponent(jbAdicionar)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -110,10 +108,11 @@ public class CreateState extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbCriarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarEstadoActionPerformed
-        listaEstados.add(jtfNomeEstado.getText());
+    private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
+        listaAlfabetos.add(jtfLetra.getText());
+        alfabetos.setAlfabetos(listaAlfabetos);
         this.dispose();
-    }//GEN-LAST:event_jbCriarEstadoActionPerformed
+    }//GEN-LAST:event_jbAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,17 +131,17 @@ public class CreateState extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateState.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAlphabet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateState.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAlphabet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateState.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAlphabet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateState.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAlphabet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
             }
@@ -150,11 +149,10 @@ public class CreateState extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jbCriarEstado;
-    private javax.swing.JRadioButton jbEstadoAceitacao;
-    private javax.swing.JTextField jtfNomeEstado;
+    private javax.swing.JButton jbAdicionar;
+    private javax.swing.JTextField jtfLetra;
     // End of variables declaration//GEN-END:variables
 }

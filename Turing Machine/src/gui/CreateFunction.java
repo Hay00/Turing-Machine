@@ -12,13 +12,26 @@ import code.Funcao;
  *
  * @author Vinicios
  */
-public class CreateFunction extends javax.swing.JFrame {
+public class CreateFunction extends javax.swing.JDialog {
+
+    private List<Funcao> listaFuncoes;
+    private String estadoAtual;
+    private String estadoProx;
+    private String direcao;
+    private String leitura;
+    private String escrita;
 
     /**
      * Creates new form CreateFunction
      */
-    public CreateFunction() {
-        
+    public CreateFunction(java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes) {
+        super(parent, modal);
+        this.listaFuncoes = listaFuncoes;
+        this.estadoAtual = null;
+        this.estadoProx = null;
+        this.direcao = null;
+        this.leitura = null;
+        this.escrita = null;
         initComponents();
     }
 
@@ -54,11 +67,12 @@ public class CreateFunction extends javax.swing.JFrame {
         jlEscrita = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jlLeitura = new javax.swing.JList<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcDirecao = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Criar Função");
 
-        jpFunc.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jpFunc.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel10.setText("Realiza a escrita de");
 
@@ -71,8 +85,18 @@ public class CreateFunction extends javax.swing.JFrame {
         jScrollPane6.setViewportView(jlSelecProxEstado);
 
         jbSelecProxEstado.setText("Selecionar");
+        jbSelecProxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSelecProxEstadoActionPerformed(evt);
+            }
+        });
 
         jbSelecEstadoAtual.setText("Selecionar");
+        jbSelecEstadoAtual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSelecEstadoAtualActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Estado atual");
 
@@ -83,19 +107,41 @@ public class CreateFunction extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel7.setText("Criar Função");
 
-        jbCriarFuncao.setText("Criar Função");
+        jtfResultadoFuncao.setEditable(false);
+
+        jbCriarFuncao.setText("Salvar Função");
+        jbCriarFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCriarFuncaoActionPerformed(evt);
+            }
+        });
 
         jbGerarFuncao.setText("Gerar Função");
+        jbGerarFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGerarFuncaoActionPerformed(evt);
+            }
+        });
 
         jbSelecLeitura.setText("Selecionar");
+        jbSelecLeitura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSelecLeituraActionPerformed(evt);
+            }
+        });
 
         jbSelecEscrita.setText("Selecionar");
+        jbSelecEscrita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSelecEscritaActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(jlEscrita);
 
         jScrollPane1.setViewportView(jlLeitura);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Direita", "Esquerda" }));
+        jcDirecao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Direita", "Esquerda" }));
 
         javax.swing.GroupLayout jpFuncLayout = new javax.swing.GroupLayout(jpFunc);
         jpFunc.setLayout(jpFuncLayout);
@@ -118,7 +164,7 @@ public class CreateFunction extends javax.swing.JFrame {
                     .addComponent(jbSelecEscrita)
                     .addComponent(jLabel10)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(jpFuncLayout.createSequentialGroup()
                 .addGap(93, 93, 93)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -131,9 +177,12 @@ public class CreateFunction extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(156, 156, 156))
+                    .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(164, 164, 164))
+            .addGroup(jpFuncLayout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpFuncLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane3, jScrollPane6});
@@ -147,8 +196,9 @@ public class CreateFunction extends javax.swing.JFrame {
         jpFuncLayout.setVerticalGroup(
             jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFuncLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -165,7 +215,7 @@ public class CreateFunction extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,7 +264,36 @@ public class CreateFunction extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbGerarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGerarFuncaoActionPerformed
+        jtfResultadoFuncao.setText(estadoAtual + ": (" + estadoProx + "," + escrita + "," + jcDirecao.getSelectedItem().toString() + ")");
+        jbCriarFuncao.setEnabled(true);
+    }//GEN-LAST:event_jbGerarFuncaoActionPerformed
+
+    private void jbSelecEstadoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecEstadoAtualActionPerformed
+        this.estadoAtual = jlSelecEstadoAtual.getSelectedValue();
+    }//GEN-LAST:event_jbSelecEstadoAtualActionPerformed
+
+    private void jbSelecProxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecProxEstadoActionPerformed
+        this.estadoProx = jlSelecProxEstado.getSelectedValue();
+    }//GEN-LAST:event_jbSelecProxEstadoActionPerformed
+
+    private void jbSelecLeituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecLeituraActionPerformed
+        this.leitura = jlLeitura.getSelectedValue();
+    }//GEN-LAST:event_jbSelecLeituraActionPerformed
+
+    private void jbSelecEscritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecEscritaActionPerformed
+        this.escrita = jlEscrita.getSelectedValue();
+    }//GEN-LAST:event_jbSelecEscritaActionPerformed
+
+    private void jbCriarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarFuncaoActionPerformed
+        this.direcao = jcDirecao.getSelectedItem().toString();
+        Funcao funcTemp = new Funcao(leitura, escrita, estadoAtual, estadoProx, direcao);
+        listaFuncoes.add(funcTemp);
+        this.dispose();
+    }//GEN-LAST:event_jbCriarFuncaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,13 +325,11 @@ public class CreateFunction extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateFunction().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -270,6 +347,7 @@ public class CreateFunction extends javax.swing.JFrame {
     private javax.swing.JButton jbSelecEstadoAtual;
     private javax.swing.JButton jbSelecLeitura;
     private javax.swing.JButton jbSelecProxEstado;
+    private javax.swing.JComboBox<String> jcDirecao;
     private javax.swing.JList<String> jlEscrita;
     private javax.swing.JList<String> jlLeitura;
     private javax.swing.JList<String> jlSelecEstadoAtual;

@@ -5,6 +5,7 @@
  */
 package gui;
 
+import code.AlfabetoTotal;
 import code.TuringMachine;
 import code.Funcao;
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ public class MainScreen extends javax.swing.JFrame {
     static TuringMachine maquina;
     private DefaultListCellRenderer renderer;
 
-    private List<Funcao> listaFuncoes;
+    private static List<String> listaEstados;
+    private static List<Funcao> listaFuncoes;
+    private static AlfabetoTotal alfabetos;
 
     /**
      * Creates new form Tela
@@ -36,6 +39,7 @@ public class MainScreen extends javax.swing.JFrame {
         maquina = new TuringMachine();
         list_fita = new DefaultListModel();
         list_cabecote = new DefaultListModel();
+
 //
 //        //jlFita.setModel(list_fita);
 //        // jlCabecote.setModel(list_cabecote);
@@ -44,8 +48,9 @@ public class MainScreen extends javax.swing.JFrame {
 //        renderer.setHorizontalAlignment(SwingConstants.CENTER);
 //        //renderer = (DefaultListCellRenderer) jlCabecote.getCellRenderer();
 //        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-
+        listaEstados = new ArrayList();
         listaFuncoes = new ArrayList();
+        // alfabetos = new AlfabetoTotal();
 
     }
 
@@ -169,6 +174,7 @@ public class MainScreen extends javax.swing.JFrame {
         jtFita.setRowSelectionAllowed(false);
         jtFita.setShowHorizontalLines(false);
         jtFita.setShowVerticalLines(false);
+        jtFita.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(jtFita);
 
         jLabel3.setText("Fita:");
@@ -190,7 +196,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4)
-                    .addComponent(jtfBuscarFrase, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                    .addComponent(jtfBuscarFrase)
                     .addComponent(jbBuscar))
                 .addContainerGap())
         );
@@ -210,30 +216,25 @@ public class MainScreen extends javax.swing.JFrame {
         jpTuringMachine.setLayout(jpTuringMachineLayout);
         jpTuringMachineLayout.setHorizontalGroup(
             jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpTuringMachineLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(150, 150, 150))
             .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addGap(0, 144, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(170, 170, 170))
-                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addComponent(jpBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                        .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addGap(16, 16, 16)
+                .addGroup(jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jpBuscas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         jpTuringMachineLayout.setVerticalGroup(
             jpTuringMachineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpTuringMachineLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jpBuscas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -252,6 +253,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel6.setText("Funções");
 
         jbTelaFuncao.setText("Nova Função");
+        jbTelaFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbTelaFuncaoActionPerformed(evt);
+            }
+        });
 
         jScrollPane3.setViewportView(jList3);
 
@@ -322,17 +328,27 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel10.setText("Alfabetos");
 
-        jLabel11.setText("Alfabeto");
+        jLabel11.setText("Alfabetos");
 
-        jLabel12.setText("Alfabeto Auxiliar");
+        jLabel12.setText("Alfabetos Auxiliares");
 
         jScrollPane1.setViewportView(jList1);
 
         jScrollPane6.setViewportView(jList4);
 
         jbInserirAlfabeto.setText("Inserir");
+        jbInserirAlfabeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbInserirAlfabetoActionPerformed(evt);
+            }
+        });
 
         jbDefinirAlfabetoAuxiliar.setText("Modificar");
+        jbDefinirAlfabetoAuxiliar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDefinirAlfabetoAuxiliarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpAlfabetoLayout = new javax.swing.GroupLayout(jpAlfabeto);
         jpAlfabeto.setLayout(jpAlfabetoLayout);
@@ -483,9 +499,24 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jbLimparFitaActionPerformed
 
     private void jbTelaEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTelaEstadoActionPerformed
-        CreateState telaCriarEstado = new CreateState(null, rootPaneCheckingEnabled, listaFuncoes);
+        CreateState telaCriarEstado = new CreateState(this, rootPaneCheckingEnabled, listaEstados);
         telaCriarEstado.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jbTelaEstadoActionPerformed
+
+    private void jbInserirAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInserirAlfabetoActionPerformed
+        AddAlphabet telaAdicionarAlfabeto = new AddAlphabet(this, rootPaneCheckingEnabled, alfabetos);
+        telaAdicionarAlfabeto.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jbInserirAlfabetoActionPerformed
+
+    private void jbTelaFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTelaFuncaoActionPerformed
+        CreateFunction telaCriarFuncao = new CreateFunction(this, rootPaneCheckingEnabled, listaFuncoes);
+        telaCriarFuncao.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jbTelaFuncaoActionPerformed
+
+    private void jbDefinirAlfabetoAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDefinirAlfabetoAuxiliarActionPerformed
+        AddAuxiliaryAlphabets telaAlfabetosAuxiliares = new AddAuxiliaryAlphabets(this, rootPaneCheckingEnabled, alfabetos);
+        telaAlfabetosAuxiliares.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jbDefinirAlfabetoAuxiliarActionPerformed
 
     public void start() {
 //        try {

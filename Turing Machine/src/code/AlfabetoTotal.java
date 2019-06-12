@@ -1,5 +1,6 @@
 package code;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +18,8 @@ public class AlfabetoTotal {
     AlfabetoTotal(String inicio, String vazio, List<String> alfabetos, List<String> auxiliares) {
         this.inicio = inicio;
         this.vazio = vazio;
-        this.alfabetos = alfabetos;
-        this.auxiliares = auxiliares;
+        this.alfabetos = new ArrayList();
+        this.auxiliares = new ArrayList();
     }
 
     public String getInicio() {
