@@ -6,17 +6,13 @@ package code;
  */
 public class Funcao {
 
-    private String nomeFuncao;
+    private String leitura;
+    private String escreve;
+    private String estadoAtual;
+    private String estadoProximo;
+    private String movimento;
 
-    Funcao(String funcao) {
-        this.nomeFuncao = funcao;
-    }
+    Funcao() {
 
-    public String getNomeFuncao() {
-        return nomeFuncao;
-    }
-
-    public void setNomeFuncao(String nomeFuncao) {
-        this.nomeFuncao = nomeFuncao;
     }
 }

@@ -471,11 +471,11 @@ public class MainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbInserirFitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInserirFitaActionPerformed
-        maquina.Inicializar(jtfInserirFita.getText().toCharArray());
-        jbInserirFita.setEnabled(false);
-        jbLimparFita.setEnabled(true);
-        jtfInserirFita.setEditable(false);
-        //start();
+//        maquina.Inicializar(jtfInserirFita.getText().toCharArray());
+//        jbInserirFita.setEnabled(false);
+//        jbLimparFita.setEnabled(true);
+//        jtfInserirFita.setEditable(false);
+//        //start();
     }//GEN-LAST:event_jbInserirFitaActionPerformed
 
     private void jbLimparFitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparFitaActionPerformed
@@ -488,34 +488,34 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jbTelaEstadoActionPerformed
 
     public void start() {
-        try {
-            maquina.executarMaquina();
-            populateLists();
-            populateTable();
-        } catch (RuntimeException e) {
-            if (e.toString().equals("java.lang.RuntimeException: error")) {
-                GUIMessage.error("Palavra rejeitada!");
-                jbLimparFita.setEnabled(false);
-            }
-            if (e.toString().equals("java.lang.RuntimeException: inf")) {
-                GUIMessage.inf("O Programa entrou em estado de aceitação!");
-                jbLimparFita.setEnabled(false);
-            }
-        }
+//        try {
+//            maquina.executarMaquina();
+//            populateLists();
+//            populateTable();
+//        } catch (RuntimeException e) {
+//            if (e.toString().equals("java.lang.RuntimeException: error")) {
+//                GUIMessage.error("Palavra rejeitada!");
+//                jbLimparFita.setEnabled(false);
+//            }
+//            if (e.toString().equals("java.lang.RuntimeException: inf")) {
+//                GUIMessage.inf("O Programa entrou em estado de aceitação!");
+//                jbLimparFita.setEnabled(false);
+//            }
+//        }
     }
 
     public void populateLists() {
-        list_cabecote.clear();
-        list_fita.clear();
-        char[] temp_fita = maquina.getFita();
-        for (int count = 0; count < temp_fita.length; count++) {
-            list_fita.addElement(temp_fita[count]);
-            if (maquina.getCabecote() == count) {
-                list_cabecote.addElement("<--  " + maquina.getEstado());
-            } else {
-                list_cabecote.addElement(" ");
-            }
-        }
+//        list_cabecote.clear();
+//        list_fita.clear();
+//        char[] temp_fita = maquina.getFita();
+//        for (int count = 0; count < temp_fita.length; count++) {
+//            list_fita.addElement(temp_fita[count]);
+//            if (maquina.getCabecote() == count) {
+//                list_cabecote.addElement("<--  " + maquina.getEstado());
+//            } else {
+//                list_cabecote.addElement(" ");
+//            }
+//        }
     }
 
     public void populateTable() {

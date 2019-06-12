@@ -8,14 +8,49 @@ import java.util.List;
  */
 public class AlfabetoTotal {
 
-    private char inicio;
-    private char vazio;
+    private String inicio;
+    private String vazio;
 
-    private List alfabetos;
-    private List auxiliares;
+    private List<String> alfabetos;
+    private List<String> auxiliares;
 
-    AlfabetoTotal() {
+    AlfabetoTotal(String inicio, String vazio, List<String> alfabetos, List<String> auxiliares) {
+        this.inicio = inicio;
+        this.vazio = vazio;
+        this.alfabetos = alfabetos;
+        this.auxiliares = auxiliares;
+    }
 
+    public String getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
+    }
+
+    public String getVazio() {
+        return vazio;
+    }
+
+    public void setVazio(String vazio) {
+        this.vazio = vazio;
+    }
+
+    public List<String> getAlfabetos() {
+        return alfabetos;
+    }
+
+    public void setAlfabetos(List<String> alfabetos) {
+        this.alfabetos = alfabetos;
+    }
+
+    public List<String> getAuxiliares() {
+        return auxiliares;
+    }
+
+    public void setAuxiliares(List<String> auxiliares) {
+        this.auxiliares = auxiliares;
     }
 
 }
