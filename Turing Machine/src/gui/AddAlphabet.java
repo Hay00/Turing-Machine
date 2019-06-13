@@ -17,14 +17,16 @@ public class AddAlphabet extends javax.swing.JDialog {
 
     private AlfabetoTotal alfabetos;
     private List<String> listaAlfabetos;
+    private MainScreen telaPai;
 
     /**
      * Creates new form AddAlphabet
      */
-    public AddAlphabet(java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
+    public AddAlphabet(MainScreen telaPai,java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
         super(parent, modal);
+        this.telaPai = telaPai;
         this.alfabetos = alfabetos;
-        this.listaAlfabetos = new ArrayList();
+        this.listaAlfabetos = alfabetos.getAlfabetos();
         initComponents();
     }
 
@@ -111,6 +113,7 @@ public class AddAlphabet extends javax.swing.JDialog {
     private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
         listaAlfabetos.add(jtfLetra.getText());
         alfabetos.setAlfabetos(listaAlfabetos);
+        telaPai.atualizarAlfabetos();
         this.dispose();
     }//GEN-LAST:event_jbAdicionarActionPerformed
 

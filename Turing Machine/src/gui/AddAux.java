@@ -14,12 +14,14 @@ import java.util.List;
 public class AddAux extends javax.swing.JDialog {
 
     private List<String> temp_auxAlfabetos;
+    AddAuxiliaryAlphabets telaPai;
 
     /**
      * Creates new form AddAux
      */
-    public AddAux(java.awt.Frame parent, boolean modal, List<String> temp_auxAlfabetos) {
+    public AddAux(AddAuxiliaryAlphabets telaPai,java.awt.Frame parent, boolean modal, List<String> temp_auxAlfabetos) {
         super(parent, modal);
+        this.telaPai = telaPai;
         this.temp_auxAlfabetos = temp_auxAlfabetos;
         initComponents();
     }
@@ -40,6 +42,7 @@ public class AddAux extends javax.swing.JDialog {
         jbAdicionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Adicionar Auxiliar");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -105,6 +108,7 @@ public class AddAux extends javax.swing.JDialog {
 
     private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
         temp_auxAlfabetos.add(jtfAuxiliar.getText());
+        telaPai.atualizarLista();
         this.dispose();
     }//GEN-LAST:event_jbAdicionarActionPerformed
 

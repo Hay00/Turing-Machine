@@ -14,12 +14,14 @@ import java.util.List;
 public class CreateState extends javax.swing.JDialog {
 
     private List<String> listaEstados;
+    private  MainScreen telaPai;
 
     /**
      * Creates new form CreateState
      */
-    public CreateState(java.awt.Frame parent, boolean modal, List<String> listaEstados) {
+    public CreateState(MainScreen telaPai,java.awt.Frame parent, boolean modal, List<String> listaEstados) {
         super(parent, modal);
+        this.telaPai = telaPai;
         this.listaEstados = listaEstados;
         initComponents();
     }
@@ -112,6 +114,7 @@ public class CreateState extends javax.swing.JDialog {
 
     private void jbCriarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarEstadoActionPerformed
         listaEstados.add(jtfNomeEstado.getText());
+        telaPai.atualizarEstados();
         this.dispose();
     }//GEN-LAST:event_jbCriarEstadoActionPerformed
 

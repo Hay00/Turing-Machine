@@ -70,7 +70,6 @@
                           <Component id="jbRemoverAuxiliar" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jbSalvar" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbAtualizarLista" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -98,9 +97,7 @@
                       <Component id="jbAdicionarAuxiliar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbRemoverAuxiliar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jbAtualizarLista" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Component id="jbSalvar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -174,13 +171,8 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbAtualizarLista">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Atualizar Lista"/>
-          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAtualizarListaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbRemoverAuxiliarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

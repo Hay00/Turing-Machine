@@ -8,6 +8,7 @@ package gui;
 import code.AlfabetoTotal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -15,17 +16,30 @@ import java.util.List;
  */
 public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
 
+    private DefaultListModel mlist_auxiliares;
+    private MainScreen telaPai;
+
     private AlfabetoTotal alfabetos;
     private List<String> temp_auxAlfabetos;
 
     /**
      * Creates new form AddAuxiliaryAlphabets
      */
-    public AddAuxiliaryAlphabets(java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
+    public AddAuxiliaryAlphabets(MainScreen telaPai,java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
         super(parent, modal);
-        this.alfabetos = alfabetos;
-        this.temp_auxAlfabetos = new ArrayList();
         initComponents();
+        
+
+        // Iniciando models
+        mlist_auxiliares = new DefaultListModel();
+
+        // Setando models para jLists
+        jlAuxiliares.setModel(mlist_auxiliares);
+
+        this.telaPai = telaPai;
+        this.alfabetos = alfabetos;
+        this.temp_auxAlfabetos = alfabetos.getAuxiliares();
+        atualizarLista();
     }
 
     /**
@@ -49,7 +63,6 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         jlAuxiliares = new javax.swing.JList<>();
         jbAdicionarAuxiliar = new javax.swing.JButton();
         jbRemoverAuxiliar = new javax.swing.JButton();
-        jbAtualizarLista = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alfabetos Auxiliares");
@@ -82,11 +95,9 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         });
 
         jbRemoverAuxiliar.setText("Remover");
-
-        jbAtualizarLista.setText("Atualizar Lista");
-        jbAtualizarLista.addActionListener(new java.awt.event.ActionListener() {
+        jbRemoverAuxiliar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAtualizarListaActionPerformed(evt);
+                jbRemoverAuxiliarActionPerformed(evt);
             }
         });
 
@@ -108,8 +119,7 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
                         .addComponent(jbAdicionarAuxiliar)
                         .addGap(0, 0, 0)
                         .addComponent(jbRemoverAuxiliar))
-                    .addComponent(jbSalvar)
-                    .addComponent(jbAtualizarLista))
+                    .addComponent(jbSalvar))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,9 +143,7 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAdicionarAuxiliar)
                     .addComponent(jbRemoverAuxiliar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbAtualizarLista)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jbSalvar)
                 .addContainerGap())
         );
@@ -165,17 +173,27 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         alfabetos.setInicio(jtfLetraInicio.getText());
         alfabetos.setVazio(jtfLetraVazio.getText());
         alfabetos.setAuxiliares(temp_auxAlfabetos);
+        telaPai.atualizarAuxiliares();        
         this.dispose();
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbAdicionarAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarAuxiliarActionPerformed
-        AddAux telaAddAux = new AddAux(null, rootPaneCheckingEnabled, temp_auxAlfabetos);
+        AddAux telaAddAux = new AddAux(this, null, rootPaneCheckingEnabled, temp_auxAlfabetos);
         telaAddAux.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jbAdicionarAuxiliarActionPerformed
 
-    private void jbAtualizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtualizarListaActionPerformed
+    private void jbRemoverAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverAuxiliarActionPerformed
+        temp_auxAlfabetos.remove(jlAuxiliares.getSelectedIndex());
+        atualizarLista();
+    }//GEN-LAST:event_jbRemoverAuxiliarActionPerformed
 
-    }//GEN-LAST:event_jbAtualizarListaActionPerformed
+    public void atualizarLista() {
+        mlist_auxiliares.clear();
+        for (int count = 0; count < temp_auxAlfabetos.size(); count++) {
+            mlist_auxiliares.addElement(temp_auxAlfabetos.get(count));
+        }
+    }
+ 
 
     /**
      * @param args the command line arguments
@@ -219,7 +237,6 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAdicionarAuxiliar;
-    private javax.swing.JButton jbAtualizarLista;
     private javax.swing.JButton jbRemoverAuxiliar;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JList<String> jlAuxiliares;

@@ -15,12 +15,18 @@ public class AlfabetoTotal {
     private List<String> alfabetos;
     private List<String> auxiliares;
 
-    AlfabetoTotal(String inicio, String vazio, List<String> alfabetos, List<String> auxiliares) {
+    public AlfabetoTotal(){
+        this.alfabetos = new ArrayList();
+        this.auxiliares = new ArrayList();
+    }
+    
+    public AlfabetoTotal(String inicio, String vazio, List<String> alfabetos, List<String> auxiliares) {
         this.inicio = inicio;
         this.vazio = vazio;
         this.alfabetos = new ArrayList();
         this.auxiliares = new ArrayList();
     }
+
 
     public String getInicio() {
         return inicio;

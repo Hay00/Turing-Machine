@@ -5,8 +5,10 @@
  */
 package gui;
 
+import code.AlfabetoTotal;
 import java.util.List;
 import code.Funcao;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -14,25 +16,63 @@ import code.Funcao;
  */
 public class CreateFunction extends javax.swing.JDialog {
 
+    // Objetos repassados
     private List<Funcao> listaFuncoes;
+    private List<String> listaEstados;
+    private List<String> listaAlfabetos;
+    private List<String> listaAuxiliares;
+
+    // Models para Jlists
+    private DefaultListModel mlist_estadosAtuais;
+    private DefaultListModel mlist_estadosProximo;
+    private DefaultListModel mlist_funcoes;
+    private DefaultListModel mlist_alfabetos;
+    private DefaultListModel mlist_alfabetosAuxiliares;
+
+    // Váriaveis temporarias
     private String estadoAtual;
     private String estadoProx;
     private String direcao;
     private String leitura;
     private String escrita;
+    private MainScreen telaPai;
 
     /**
      * Creates new form CreateFunction
      */
-    public CreateFunction(java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes) {
+    public CreateFunction(MainScreen telaPai,java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes, List<String> listaEstados, AlfabetoTotal alfabetos) {
         super(parent, modal);
+        this.telaPai = telaPai;
+        initComponents();
+        
+        // Iniciando os models
+        mlist_estadosAtuais = new DefaultListModel();
+        mlist_estadosProximo = new DefaultListModel();
+        mlist_funcoes = new DefaultListModel();
+        mlist_alfabetos = new DefaultListModel();
+        mlist_alfabetosAuxiliares = new DefaultListModel();
+        
+        // Setando objetos repassados
         this.listaFuncoes = listaFuncoes;
+        this.listaEstados = listaEstados;
+        this.listaAlfabetos = alfabetos.getAlfabetos();
+        this.listaAuxiliares = alfabetos.getAuxiliares();
+
+        // Setando models para Jlists
+        jlSelecEstadoAtual.setModel(mlist_estadosAtuais);
+        jlSelecProxEstado.setModel(mlist_estadosProximo);
+        jlLeitura.setModel(mlist_alfabetos);
+        jlEscrita.setModel(mlist_alfabetosAuxiliares);
+
+        // Setando váriaveis locais temporárias
         this.estadoAtual = null;
         this.estadoProx = null;
         this.direcao = null;
         this.leitura = null;
         this.escrita = null;
-        initComponents();
+        
+        
+        mostrarItens();
     }
 
     /**
@@ -292,8 +332,24 @@ public class CreateFunction extends javax.swing.JDialog {
         this.direcao = jcDirecao.getSelectedItem().toString();
         Funcao funcTemp = new Funcao(leitura, escrita, estadoAtual, estadoProx, direcao);
         listaFuncoes.add(funcTemp);
+        telaPai.atualizarFuncoes();
         this.dispose();
     }//GEN-LAST:event_jbCriarFuncaoActionPerformed
+    
+    private void mostrarItens() {
+        for (int count = 0; count < listaEstados.size(); count++) {
+            mlist_estadosAtuais.addElement(listaEstados.get(count));
+            mlist_estadosProximo.addElement(listaEstados.get(count));            
+        }
+        
+        for (int count = 0; count < listaAlfabetos.size(); count++) {
+            mlist_alfabetos.addElement(listaAlfabetos.get(count));
+        }
+        
+        for (int count = 0; count < listaAuxiliares.size(); count++) {
+            mlist_alfabetosAuxiliares.addElement(listaAuxiliares.get(count));
+        }
+    }
 
     /**
      * @param args the command line arguments
