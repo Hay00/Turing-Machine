@@ -16,6 +16,8 @@ public class AlfabetoTotal {
     private List<String> auxiliares;
 
     public AlfabetoTotal(){
+        this.inicio = "*";
+        this.vazio = "β";
         this.alfabetos = new ArrayList();
         this.auxiliares = new ArrayList();
     }

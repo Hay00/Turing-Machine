@@ -39,6 +39,7 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         this.telaPai = telaPai;
         this.alfabetos = alfabetos;
         this.temp_auxAlfabetos = alfabetos.getAuxiliares();
+        setarCaixasTexto();
         atualizarLista();
     }
 
@@ -187,6 +188,11 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         atualizarLista();
     }//GEN-LAST:event_jbRemoverAuxiliarActionPerformed
 
+    private void setarCaixasTexto(){
+        jtfLetraInicio.setText(alfabetos.getInicio());
+        jtfLetraVazio.setText(alfabetos.getVazio());
+    }
+    
     public void atualizarLista() {
         mlist_auxiliares.clear();
         for (int count = 0; count < temp_auxAlfabetos.size(); count++) {

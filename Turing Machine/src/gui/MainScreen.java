@@ -30,14 +30,16 @@ public class MainScreen extends javax.swing.JFrame {
     private DefaultListModel mlist_funcoes;
     private DefaultListModel mlist_alfabetos;
     private DefaultListModel mlist_alfabetosAuxiliares;
+    private DefaultTableModel model;
 
-    
     static TuringMachine maquina;
     private DefaultListCellRenderer renderer;
 
     private static List<String> listaEstados;
     private static List<Funcao> listaFuncoes;
     private static AlfabetoTotal alfabetos;
+
+    private List<String> jlTabelaColunas;
 
     /**
      * Creates new form Tela
@@ -47,11 +49,12 @@ public class MainScreen extends javax.swing.JFrame {
         maquina = new TuringMachine();
         mlist_fita = new DefaultListModel();
         mlist_cabecote = new DefaultListModel();
-
         mlist_estados = new DefaultListModel();
         mlist_funcoes = new DefaultListModel();
         mlist_alfabetos = new DefaultListModel();
         mlist_alfabetosAuxiliares = new DefaultListModel();
+        model = (DefaultTableModel) jtTabela.getModel();
+        model.setColumnCount(0);
 //
 //        //jlFita.setModel(list_fita);
 //        // jlCabecote.setModel(list_cabecote);
@@ -72,6 +75,7 @@ public class MainScreen extends javax.swing.JFrame {
         jlAlfabetos.setModel(mlist_alfabetos);
         jlAuxiliares.setModel(mlist_alfabetosAuxiliares);
 
+        jlTabelaColunas = new ArrayList();
     }
 
     /**
@@ -174,7 +178,7 @@ public class MainScreen extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "-", "-", "-", "|", "-", "-", "-"
+                "-", "-", "-", "(Cabeçote)", "-", "-", "-"
             }
         ) {
             Class[] types = new Class [] {
@@ -599,22 +603,21 @@ public class MainScreen extends javax.swing.JFrame {
 //        }
     }
 
-    public void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
-        model.setRowCount(0);
-        String[][] temp_historico = maquina.getHistorico();
-        for (int count = 0; count < 9; count++) {
-            model.addRow(new Object[]{"q" + count,
-                temp_historico[count][0],
-                temp_historico[count][1],
-                temp_historico[count][2],
-                temp_historico[count][3],
-                temp_historico[count][4],
-                temp_historico[count][5], /*temp_hijbTelaEstado*/});
-
-        }
-    }
-
+//    public void populateTable() {
+//        DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
+//        model.setRowCount(0);
+//        String[][] temp_historico = maquina.getHistorico();
+//        for (int count = 0; count < 9; count++) {
+//            model.addRow(new Object[]{"q" + count,
+//                temp_historico[count][0],
+//                temp_historico[count][1],
+//                temp_historico[count][2],
+//                temp_historico[count][3],
+//                temp_historico[count][4],
+//                temp_historico[count][5], /*temp_hijbTelaEstado*/});
+//
+//        }
+//    }
     public void atualizarEstados() {
         mlist_estados.clear();
         if (!listaEstados.isEmpty()) {
@@ -629,12 +632,10 @@ public class MainScreen extends javax.swing.JFrame {
         if (!listaFuncoes.isEmpty()) {
             for (int count = 0; count < listaFuncoes.size(); count++) {
                 Funcao temp_func = listaFuncoes.get(count);
-
                 String atualEstado = temp_func.getEstadoAtual();
                 String proxEstado = temp_func.getEstadoProximo();
                 String escreve = temp_func.getEscreve();
                 String direcao = temp_func.getDirecao();
-
                 mlist_funcoes.addElement("(" + atualEstado + ") " + "(" + proxEstado + "," + escreve + "," + direcao + ")");
             }
         }
@@ -648,6 +649,7 @@ public class MainScreen extends javax.swing.JFrame {
                 mlist_alfabetos.addElement(temp_listaAlfabetos.get(count));
             }
         }
+        popularColunasTabela();
     }
 
     public void atualizarAuxiliares() {
@@ -658,31 +660,46 @@ public class MainScreen extends javax.swing.JFrame {
         for (int count = 0; count < temp_auxAlfabetos.size(); count++) {
             mlist_alfabetosAuxiliares.addElement(temp_auxAlfabetos.get(count));
         }
+        popularColunasTabela();
     }
 
-    public void atualizarFita(){
-        
+    public void atualizarFita() {
+
     }
-    
-    public void atualizarTabela() {
-        if ((alfabetos.getAlfabetos().size() + alfabetos.getAuxiliares().size() + 2) < 15) {
-            DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
+
+    public void popularColunasTabela() {
+        if (!alfabetos.getAlfabetos().isEmpty() && !alfabetos.getAuxiliares().isEmpty()) {
+            jlTabelaColunas = new ArrayList<>();
 
             model.setColumnCount(0);
             model.addColumn("Estado");
             model.addColumn(alfabetos.getInicio());
+            jlTabelaColunas.add(alfabetos.getInicio());
 
             List<String> temp_listaAlfabetos = alfabetos.getAlfabetos();
             for (int count = 0; count < temp_listaAlfabetos.size(); count++) {
                 model.addColumn(temp_listaAlfabetos.get(count));
+                jlTabelaColunas.add(temp_listaAlfabetos.get(count));
             }
 
             List<String> temp_listaAuxiliares = alfabetos.getAuxiliares();
             for (int count = 0; count < temp_listaAuxiliares.size(); count++) {
                 model.addColumn(temp_listaAuxiliares.get(count));
+                jlTabelaColunas.add(temp_listaAuxiliares.get(count));
             }
 
             model.addColumn(alfabetos.getVazio());
+            jlTabelaColunas.add(alfabetos.getVazio());
+            
+            for (int count = 0; count< jlTabelaColunas.size();count++){
+                System.out.println(count+" :"+ jlTabelaColunas.get(count));
+            }
+        }
+    }
+
+    public void atualizarTabela() {
+        if ((alfabetos.getAlfabetos().size() + alfabetos.getAuxiliares().size() + 2) < 15) {
+            
         }
     }
 

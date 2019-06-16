@@ -13,7 +13,7 @@ public class TuringMachine {
     private List<String> listaEstados;
     private List<Funcao> listaFuncoes;
 
-    private String[][] historico = new String[9][7];
+    //private String[][] historico = new String[9][7];
 
     public TuringMachine() {
         alfabeto = new AlfabetoTotal();
@@ -72,13 +72,13 @@ public class TuringMachine {
         this.listaFuncoes = listaFuncoes;
     }
 
-    public String[][] getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(String[][] historico) {
-        this.historico = historico;
-    }
+//    public String[][] getHistorico() {
+//        return historico;
+//    }
+//
+//    public void setHistorico(String[][] historico) {
+//        this.historico = historico;
+//    }
 
     /*
      * Final gets e sets

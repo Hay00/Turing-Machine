@@ -270,7 +270,7 @@
                     <Column editable="false" title="-" type="java.lang.String"/>
                     <Column editable="false" title="-" type="java.lang.String"/>
                     <Column editable="false" title="-" type="java.lang.String"/>
-                    <Column editable="false" title="|" type="java.lang.String"/>
+                    <Column editable="false" title="(Cabe&#xe7;ote)" type="java.lang.String"/>
                     <Column editable="false" title="-" type="java.lang.String"/>
                     <Column editable="false" title="-" type="java.lang.String"/>
                     <Column editable="false" title="-" type="java.lang.String"/>
