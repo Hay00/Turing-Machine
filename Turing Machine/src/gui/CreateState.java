@@ -5,6 +5,8 @@
  */
 package gui;
 
+import code.Estado;
+import code.TuringMachine;
 import java.util.List;
 
 /**
@@ -14,15 +16,19 @@ import java.util.List;
 public class CreateState extends javax.swing.JDialog {
 
     private List<String> listaEstados;
-    private  MainScreen telaPai;
+    private MainScreen telaPai;
+    private TuringMachine maquina;
+    private List<Estado> listaEstadosTotal;
 
     /**
      * Creates new form CreateState
      */
-    public CreateState(MainScreen telaPai,java.awt.Frame parent, boolean modal, List<String> listaEstados) {
+    public CreateState(MainScreen telaPai, java.awt.Frame parent, boolean modal, List<String> listaEstadosNome, TuringMachine maquina, List<Estado> listaEstadosTotal) {
         super(parent, modal);
         this.telaPai = telaPai;
-        this.listaEstados = listaEstados;
+        this.maquina = maquina;
+        this.listaEstados = listaEstadosNome;
+        this.listaEstadosTotal = listaEstadosTotal;
         initComponents();
     }
 
@@ -38,9 +44,10 @@ public class CreateState extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jtfNomeEstado = new javax.swing.JTextField();
-        jbEstadoAceitacao = new javax.swing.JRadioButton();
+        jrbEstadoAceitacao = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jbCriarEstado = new javax.swing.JButton();
+        jrbEstadoInicial = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Criar Estado");
@@ -49,7 +56,12 @@ public class CreateState extends javax.swing.JDialog {
 
         jLabel11.setText("Inserir Estado");
 
-        jbEstadoAceitacao.setText("Estado de Aceitação");
+        jrbEstadoAceitacao.setText("Estado de Aceitação");
+        jrbEstadoAceitacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbEstadoAceitacaoActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel7.setText("Criar Estado");
@@ -58,6 +70,13 @@ public class CreateState extends javax.swing.JDialog {
         jbCriarEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCriarEstadoActionPerformed(evt);
+            }
+        });
+
+        jrbEstadoInicial.setText("Estado Inicial");
+        jrbEstadoInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbEstadoInicialActionPerformed(evt);
             }
         });
 
@@ -71,8 +90,9 @@ public class CreateState extends javax.swing.JDialog {
                     .addComponent(jLabel7)
                     .addComponent(jLabel11)
                     .addComponent(jtfNomeEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbEstadoAceitacao)
-                    .addComponent(jbCriarEstado))
+                    .addComponent(jrbEstadoAceitacao)
+                    .addComponent(jbCriarEstado)
+                    .addComponent(jrbEstadoInicial))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
@@ -84,11 +104,13 @@ public class CreateState extends javax.swing.JDialog {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtfNomeEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jrbEstadoInicial)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbEstadoAceitacao)
+                .addComponent(jrbEstadoAceitacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbCriarEstado)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -113,10 +135,35 @@ public class CreateState extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCriarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarEstadoActionPerformed
-        listaEstados.add(jtfNomeEstado.getText());
-        telaPai.atualizarEstados();
-        this.dispose();
+        if (!jtfNomeEstado.getText().trim().isEmpty()) {
+            listaEstados.add(jtfNomeEstado.getText());
+            if (jrbEstadoInicial.isSelected() && TuringMachine.getEstadoInicial().equals("")) {
+                TuringMachine.setEstadoInicial(jtfNomeEstado.getText());
+                TuringMachine.setEstadoAtual(jtfNomeEstado.getText());
+                Estado temp_estado = new Estado(jtfNomeEstado.getText(), false);
+                System.out.println("Inicio");
+                listaEstadosTotal.add(temp_estado);
+            } else if (jrbEstadoAceitacao.isSelected()) {
+                System.out.println("Aceitacao");
+                Estado temp_estado = new Estado(jtfNomeEstado.getText(), true);
+                listaEstadosTotal.add(temp_estado);
+            } else {
+                System.out.println("Normal");
+                Estado temp_estado = new Estado(jtfNomeEstado.getText(), false);
+                listaEstadosTotal.add(temp_estado);
+            }
+            telaPai.atualizarEstados();
+            this.dispose();
+        }
     }//GEN-LAST:event_jbCriarEstadoActionPerformed
+
+    private void jrbEstadoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbEstadoInicialActionPerformed
+        jrbEstadoAceitacao.setSelected(false);
+    }//GEN-LAST:event_jrbEstadoInicialActionPerformed
+
+    private void jrbEstadoAceitacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbEstadoAceitacaoActionPerformed
+        jrbEstadoInicial.setSelected(false);
+    }//GEN-LAST:event_jrbEstadoAceitacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,7 +204,8 @@ public class CreateState extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbCriarEstado;
-    private javax.swing.JRadioButton jbEstadoAceitacao;
+    private javax.swing.JRadioButton jrbEstadoAceitacao;
+    private javax.swing.JRadioButton jrbEstadoInicial;
     private javax.swing.JTextField jtfNomeEstado;
     // End of variables declaration//GEN-END:variables
 }

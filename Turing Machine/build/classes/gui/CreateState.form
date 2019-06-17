@@ -54,14 +54,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel7" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jtfNomeEstado" alignment="2" min="-2" pref="148" max="-2" attributes="0"/>
-                      <Component id="jbEstadoAceitacao" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jrbEstadoAceitacao" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jbCriarEstado" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jrbEstadoInicial" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -76,11 +77,13 @@
                   <Component id="jLabel11" min="-2" pref="16" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jtfNomeEstado" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jrbEstadoInicial" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jbEstadoAceitacao" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrbEstadoAceitacao" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jbCriarEstado" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -93,10 +96,13 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jtfNomeEstado">
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jbEstadoAceitacao">
+        <Component class="javax.swing.JRadioButton" name="jrbEstadoAceitacao">
           <Properties>
             <Property name="text" type="java.lang.String" value="Estado de Aceita&#xe7;&#xe3;o"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbEstadoAceitacaoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -112,6 +118,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCriarEstadoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jrbEstadoInicial">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estado Inicial"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbEstadoInicialActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

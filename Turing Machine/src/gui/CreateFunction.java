@@ -30,6 +30,8 @@ public class CreateFunction extends javax.swing.JDialog {
     private DefaultListModel mlist_alfabetosAuxiliares;
 
     // Váriaveis temporarias
+    private String inicio;
+    private String vazio;
     private String estadoAtual;
     private String estadoProx;
     private String direcao;
@@ -40,23 +42,25 @@ public class CreateFunction extends javax.swing.JDialog {
     /**
      * Creates new form CreateFunction
      */
-    public CreateFunction(MainScreen telaPai,java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes, List<String> listaEstados, AlfabetoTotal alfabetos) {
+    public CreateFunction(MainScreen telaPai, java.awt.Frame parent, boolean modal, List<Funcao> listaFuncoes, List<String> listaEstados, AlfabetoTotal alfabetos) {
         super(parent, modal);
         this.telaPai = telaPai;
         initComponents();
-        
+
         // Iniciando os models
         mlist_estadosAtuais = new DefaultListModel();
         mlist_estadosProximo = new DefaultListModel();
         mlist_funcoes = new DefaultListModel();
         mlist_alfabetos = new DefaultListModel();
         mlist_alfabetosAuxiliares = new DefaultListModel();
-        
+
         // Setando objetos repassados
         this.listaFuncoes = listaFuncoes;
         this.listaEstados = listaEstados;
         this.listaAlfabetos = alfabetos.getAlfabetos();
         this.listaAuxiliares = alfabetos.getAuxiliares();
+        this.inicio = alfabetos.getInicio();
+        this.vazio = alfabetos.getVazio();
 
         // Setando models para Jlists
         jlSelecEstadoAtual.setModel(mlist_estadosAtuais);
@@ -70,8 +74,7 @@ public class CreateFunction extends javax.swing.JDialog {
         this.direcao = null;
         this.leitura = null;
         this.escrita = null;
-        
-        
+
         mostrarItens();
     }
 
@@ -92,8 +95,6 @@ public class CreateFunction extends javax.swing.JDialog {
         jlSelecEstadoAtual = new javax.swing.JList<>();
         jScrollPane6 = new javax.swing.JScrollPane();
         jlSelecProxEstado = new javax.swing.JList<>();
-        jbSelecProxEstado = new javax.swing.JButton();
-        jbSelecEstadoAtual = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -101,8 +102,6 @@ public class CreateFunction extends javax.swing.JDialog {
         jtfResultadoFuncao = new javax.swing.JTextField();
         jbCriarFuncao = new javax.swing.JButton();
         jbGerarFuncao = new javax.swing.JButton();
-        jbSelecLeitura = new javax.swing.JButton();
-        jbSelecEscrita = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlEscrita = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -123,20 +122,6 @@ public class CreateFunction extends javax.swing.JDialog {
         jScrollPane3.setViewportView(jlSelecEstadoAtual);
 
         jScrollPane6.setViewportView(jlSelecProxEstado);
-
-        jbSelecProxEstado.setText("Selecionar");
-        jbSelecProxEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSelecProxEstadoActionPerformed(evt);
-            }
-        });
-
-        jbSelecEstadoAtual.setText("Selecionar");
-        jbSelecEstadoAtual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSelecEstadoAtualActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Estado atual");
 
@@ -163,20 +148,6 @@ public class CreateFunction extends javax.swing.JDialog {
             }
         });
 
-        jbSelecLeitura.setText("Selecionar");
-        jbSelecLeitura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSelecLeituraActionPerformed(evt);
-            }
-        });
-
-        jbSelecEscrita.setText("Selecionar");
-        jbSelecEscrita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSelecEscritaActionPerformed(evt);
-            }
-        });
-
         jScrollPane2.setViewportView(jlEscrita);
 
         jScrollPane1.setViewportView(jlLeitura);
@@ -188,23 +159,15 @@ public class CreateFunction extends javax.swing.JDialog {
         jpFuncLayout.setHorizontalGroup(
             jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpFuncLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel9)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSelecLeitura)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSelecEstadoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(97, 97, 97)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSelecProxEstado)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSelecEscrita)
-                    .addComponent(jLabel10)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(jpFuncLayout.createSequentialGroup()
                 .addGap(93, 93, 93)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -213,25 +176,29 @@ public class CreateFunction extends javax.swing.JDialog {
                     .addComponent(jtfResultadoFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbCriarFuncao))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFuncLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4)
-                    .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(164, 164, 164))
             .addGroup(jpFuncLayout.createSequentialGroup()
                 .addGap(133, 133, 133)
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFuncLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpFuncLayout.createSequentialGroup()
+                        .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(97, 97, 97)
+                        .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))))
+                .addGap(15, 15, 15))
         );
 
         jpFuncLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane3, jScrollPane6});
 
         jpFuncLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
-
-        jpFuncLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbSelecEstadoAtual, jbSelecProxEstado});
-
-        jpFuncLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbSelecEscrita, jbSelecLeitura});
 
         jpFuncLayout.setVerticalGroup(
             jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,30 +213,21 @@ public class CreateFunction extends javax.swing.JDialog {
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSelecEstadoAtual)
-                    .addComponent(jbSelecProxEstado))
+                .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jpFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpFuncLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcDirecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbSelecLeitura))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpFuncLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbSelecEscrita)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jbGerarFuncao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
@@ -279,10 +237,6 @@ public class CreateFunction extends javax.swing.JDialog {
                 .addComponent(jbCriarFuncao)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-
-        jpFuncLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbSelecEstadoAtual, jbSelecProxEstado});
-
-        jpFuncLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbSelecEscrita, jbSelecLeitura});
 
         jpFuncLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
 
@@ -308,47 +262,49 @@ public class CreateFunction extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGerarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGerarFuncaoActionPerformed
-        jtfResultadoFuncao.setText(estadoAtual + ": (" + estadoProx + "," + escrita + "," + jcDirecao.getSelectedItem().toString() + ")");
+        this.direcao = jcDirecao.getSelectedItem().toString();
+        this.estadoAtual = jlSelecEstadoAtual.getSelectedValue();
+        this.estadoProx = jlSelecProxEstado.getSelectedValue();
+        this.leitura = jlLeitura.getSelectedValue();
+        this.escrita = jlEscrita.getSelectedValue();
+        jtfResultadoFuncao.setText(estadoAtual + ": (" + estadoProx + ", " + escrita + ", " + jcDirecao.getSelectedItem().toString() + ")");
         jbCriarFuncao.setEnabled(true);
     }//GEN-LAST:event_jbGerarFuncaoActionPerformed
 
-    private void jbSelecEstadoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecEstadoAtualActionPerformed
-        this.estadoAtual = jlSelecEstadoAtual.getSelectedValue();
-    }//GEN-LAST:event_jbSelecEstadoAtualActionPerformed
-
-    private void jbSelecProxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecProxEstadoActionPerformed
-        this.estadoProx = jlSelecProxEstado.getSelectedValue();
-    }//GEN-LAST:event_jbSelecProxEstadoActionPerformed
-
-    private void jbSelecLeituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecLeituraActionPerformed
-        this.leitura = jlLeitura.getSelectedValue();
-    }//GEN-LAST:event_jbSelecLeituraActionPerformed
-
-    private void jbSelecEscritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSelecEscritaActionPerformed
-        this.escrita = jlEscrita.getSelectedValue();
-    }//GEN-LAST:event_jbSelecEscritaActionPerformed
-
     private void jbCriarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarFuncaoActionPerformed
-        this.direcao = jcDirecao.getSelectedItem().toString();
+
         Funcao funcTemp = new Funcao(leitura, escrita, estadoAtual, estadoProx, direcao);
         listaFuncoes.add(funcTemp);
         telaPai.atualizarFuncoes();
+        telaPai.atualizarTabelaMaquina();
         this.dispose();
     }//GEN-LAST:event_jbCriarFuncaoActionPerformed
-    
+
     private void mostrarItens() {
         for (int count = 0; count < listaEstados.size(); count++) {
             mlist_estadosAtuais.addElement(listaEstados.get(count));
-            mlist_estadosProximo.addElement(listaEstados.get(count));            
+            mlist_estadosProximo.addElement(listaEstados.get(count));
         }
-        
+
+        // Lista de leitura
+        mlist_alfabetos.addElement(inicio);
         for (int count = 0; count < listaAlfabetos.size(); count++) {
             mlist_alfabetos.addElement(listaAlfabetos.get(count));
         }
-        
+        for (int count = 0; count < listaAlfabetos.size(); count++) {
+            mlist_alfabetos.addElement(listaAuxiliares.get(count));
+        }
+        mlist_alfabetos.addElement(vazio);
+
+        // Lista de escrita
+        mlist_alfabetosAuxiliares.addElement(inicio);
+        for (int count = 0; count < listaAuxiliares.size(); count++) {
+            mlist_alfabetosAuxiliares.addElement(listaAlfabetos.get(count));
+        }
         for (int count = 0; count < listaAuxiliares.size(); count++) {
             mlist_alfabetosAuxiliares.addElement(listaAuxiliares.get(count));
         }
+        mlist_alfabetosAuxiliares.addElement(vazio);
     }
 
     /**
@@ -399,10 +355,6 @@ public class CreateFunction extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JButton jbCriarFuncao;
     private javax.swing.JButton jbGerarFuncao;
-    private javax.swing.JButton jbSelecEscrita;
-    private javax.swing.JButton jbSelecEstadoAtual;
-    private javax.swing.JButton jbSelecLeitura;
-    private javax.swing.JButton jbSelecProxEstado;
     private javax.swing.JComboBox<String> jcDirecao;
     private javax.swing.JList<String> jlEscrita;
     private javax.swing.JList<String> jlLeitura;

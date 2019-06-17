@@ -19,7 +19,7 @@ public class AddAux extends javax.swing.JDialog {
     /**
      * Creates new form AddAux
      */
-    public AddAux(AddAuxiliaryAlphabets telaPai,java.awt.Frame parent, boolean modal, List<String> temp_auxAlfabetos) {
+    public AddAux(AddAuxiliaryAlphabets telaPai, java.awt.Frame parent, boolean modal, List<String> temp_auxAlfabetos) {
         super(parent, modal);
         this.telaPai = telaPai;
         this.temp_auxAlfabetos = temp_auxAlfabetos;
@@ -107,9 +107,11 @@ public class AddAux extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
-        temp_auxAlfabetos.add(jtfAuxiliar.getText());
-        telaPai.atualizarLista();
-        this.dispose();
+        if (!jtfAuxiliar.getText().trim().isEmpty()) {
+            temp_auxAlfabetos.add(jtfAuxiliar.getText());
+            telaPai.atualizarLista();
+            this.dispose();
+        }
     }//GEN-LAST:event_jbAdicionarActionPerformed
 
     /**
