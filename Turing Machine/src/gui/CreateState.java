@@ -8,6 +8,7 @@ package gui;
 import code.Estado;
 import code.TuringMachine;
 import java.util.List;
+import utilities.GUIMessage;
 
 /**
  *
@@ -153,7 +154,10 @@ public class CreateState extends javax.swing.JDialog {
                 listaEstadosTotal.add(temp_estado);
             }
             telaPai.atualizarEstados();
+            telaPai.ativarBotaoFuncao();
             this.dispose();
+        }else{
+            GUIMessage.error("Insira um nome para o estado!");
         }
     }//GEN-LAST:event_jbCriarEstadoActionPerformed
 

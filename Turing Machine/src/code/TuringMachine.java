@@ -3,6 +3,7 @@ package code;
 import java.util.ArrayList;
 import java.util.List;
 import utilities.Formatting;
+import utilities.GUIMessage;
 
 public class TuringMachine {
 
@@ -132,7 +133,7 @@ public class TuringMachine {
 
             if (temp_estado.getEstado().equals(estadoAtual)) {
                 if (temp_estado.isAceitacao()) {
-                    System.out.println("\nEstado de aceitação!\n");
+                    GUIMessage.inf("O programa entrou em: Estado de Aceitação");
                     return true;
                 }
             }

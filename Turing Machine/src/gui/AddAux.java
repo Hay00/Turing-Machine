@@ -6,6 +6,7 @@
 package gui;
 
 import java.util.List;
+import utilities.GUIMessage;
 
 /**
  *
@@ -111,6 +112,8 @@ public class AddAux extends javax.swing.JDialog {
             temp_auxAlfabetos.add(jtfAuxiliar.getText());
             telaPai.atualizarLista();
             this.dispose();
+        }else{
+            GUIMessage.error("Adicione uma letra auxiliar!");
         }
     }//GEN-LAST:event_jbAdicionarActionPerformed
 

@@ -8,6 +8,7 @@ package gui;
 import code.AlfabetoTotal;
 import java.util.ArrayList;
 import java.util.List;
+import utilities.GUIMessage;
 
 /**
  *
@@ -115,7 +116,10 @@ public class AddAlphabet extends javax.swing.JDialog {
             listaAlfabetos.add(jtfLetra.getText());
             alfabetos.setAlfabetos(listaAlfabetos);
             telaPai.atualizarAlfabetos();
+            telaPai.ativarBotaoFuncao();
             this.dispose();
+        }else{
+            GUIMessage.error("Insira uma letra para o alfabeto!");
         }
     }//GEN-LAST:event_jbAdicionarActionPerformed
 

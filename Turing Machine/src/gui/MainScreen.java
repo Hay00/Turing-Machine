@@ -58,14 +58,7 @@ public class MainScreen extends javax.swing.JFrame {
         tmTabela = (DefaultTableModel) jtTabela.getModel();
         tmFita = (DefaultTableModel) jtFita.getModel();
         tmTabela.setColumnCount(0);
-//
-//        //jlFita.setModel(list_fita);
-//        // jlCabecote.setModel(list_cabecote);
-//        jbLimparFita.setEnabled(false);
-//        //renderer = (DefaultListCellRenderer) jlFita.getCellRenderer();
-//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        //renderer = (DefaultListCellRenderer) jlCabecote.getCellRenderer();
-//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
         listaEstadosNome = TuringMachine.getListaEstadosNome();
         listaEstadosTotal = TuringMachine.getListaEstadosTotal();
         listaFuncoes = TuringMachine.getListaFuncoes();
@@ -81,6 +74,13 @@ public class MainScreen extends javax.swing.JFrame {
         jlAuxiliares.setModel(mlist_alfabetosAuxiliares);
 
         jlTabelaColunas = new ArrayList();
+
+        // Desabilitando botões
+        jbTelaFuncao.setEnabled(false);
+        jbIniciar.setEnabled(false);
+        jbRemoverEstado.setEnabled(false);
+        jbRemoverAlfabeto.setEnabled(false);
+        jbRemoverFuncao.setEnabled(false);
     }
 
     /**
@@ -113,11 +113,13 @@ public class MainScreen extends javax.swing.JFrame {
         jbTelaFuncao = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlFuncoes = new javax.swing.JList<>();
+        jbRemoverFuncao = new javax.swing.JButton();
         jpEstados = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jbTelaEstado = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlEstados = new javax.swing.JList<>();
+        jbRemoverEstado = new javax.swing.JButton();
         jpAlfabeto = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -128,6 +130,7 @@ public class MainScreen extends javax.swing.JFrame {
         jlAuxiliares = new javax.swing.JList<>();
         jbInserirAlfabeto = new javax.swing.JButton();
         jbDefinirAlfabetoAuxiliar = new javax.swing.JButton();
+        jbRemoverAlfabeto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Turing Machine");
@@ -326,7 +329,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         jLabel6.setText("Funções");
 
-        jbTelaFuncao.setText("Nova Função");
+        jbTelaFuncao.setText("Criar");
         jbTelaFuncao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbTelaFuncaoActionPerformed(evt);
@@ -335,6 +338,13 @@ public class MainScreen extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jlFuncoes);
 
+        jbRemoverFuncao.setText("Remover");
+        jbRemoverFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemoverFuncaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpFuncoesLayout = new javax.swing.GroupLayout(jpFuncoes);
         jpFuncoes.setLayout(jpFuncoesLayout);
         jpFuncoesLayout.setHorizontalGroup(
@@ -342,10 +352,13 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jpFuncoesLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jpFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jbTelaFuncao))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addGroup(jpFuncoesLayout.createSequentialGroup()
+                        .addComponent(jbTelaFuncao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbRemoverFuncao))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jpFuncoesLayout.setVerticalGroup(
             jpFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,9 +366,11 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbTelaFuncao)
+                .addComponent(jScrollPane3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbTelaFuncao)
+                    .addComponent(jbRemoverFuncao))
                 .addContainerGap())
         );
 
@@ -373,17 +388,32 @@ public class MainScreen extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jlEstados);
 
+        jbRemoverEstado.setText("Remover");
+        jbRemoverEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemoverEstadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpEstadosLayout = new javax.swing.GroupLayout(jpEstados);
         jpEstados.setLayout(jpEstadosLayout);
         jpEstadosLayout.setHorizontalGroup(
             jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpEstadosLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel7)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbTelaEstado))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jpEstadosLayout.createSequentialGroup()
+                        .addGroup(jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpEstadosLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel7))
+                            .addGroup(jpEstadosLayout.createSequentialGroup()
+                                .addComponent(jbTelaEstado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbRemoverEstado)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addGap(30, 30, 30))
         );
         jpEstadosLayout.setVerticalGroup(
             jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,9 +421,11 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbTelaEstado)
+                .addGroup(jpEstadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbTelaEstado)
+                    .addComponent(jbRemoverEstado))
                 .addContainerGap())
         );
 
@@ -426,26 +458,36 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
 
+        jbRemoverAlfabeto.setText("Remover");
+        jbRemoverAlfabeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemoverAlfabetoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpAlfabetoLayout = new javax.swing.GroupLayout(jpAlfabeto);
         jpAlfabeto.setLayout(jpAlfabetoLayout);
         jpAlfabetoLayout.setHorizontalGroup(
             jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlfabetoLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(30, 30, 30)
                 .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jbInserirAlfabeto)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
+                        .addComponent(jbInserirAlfabeto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbRemoverAlfabeto))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbDefinirAlfabetoAuxiliar)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addGap(40, 40, 40))
+                .addGap(30, 30, 30))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlfabetoLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(176, 176, 176))
         );
         jpAlfabetoLayout.setVerticalGroup(
             jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,16 +500,14 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbDefinirAlfabetoAuxiliar)
-                        .addContainerGap())
-                    .addGroup(jpAlfabetoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbInserirAlfabeto)
-                        .addGap(6, 6, 6))))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpAlfabetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbInserirAlfabeto)
+                    .addComponent(jbRemoverAlfabeto)
+                    .addComponent(jbDefinirAlfabetoAuxiliar))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -493,7 +533,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jpTuringMachine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jpEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jpFuncoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -512,6 +552,7 @@ public class MainScreen extends javax.swing.JFrame {
         if (jtfInserirFita.getText().length() < 2 && !jtfInserirFita.getText().trim().equals("")) {
             fita.add(jtfInserirFita.getText());
             jtfInserirFita.setText("");
+            jbIniciar.setEnabled(true);
         } else {
             System.out.println("Não é caracter");
         }
@@ -521,6 +562,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jbLimparFitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparFitaActionPerformed
         maquina.limparFita();
+        jbIniciar.setEnabled(false);
         atualizarTabelaFita();
     }//GEN-LAST:event_jbLimparFitaActionPerformed
 
@@ -545,46 +587,52 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jbDefinirAlfabetoAuxiliarActionPerformed
 
     private void jbIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIniciarActionPerformed
+        TuringMachine.setCabecote(0);
+        TuringMachine.setEstadoInicial(TuringMachine.getEstadoInicial());
         boolean resultadoBusca = false;
         while (!resultadoBusca) {
             for (int count = 0; count < listaFuncoes.size(); count++) {
                 resultadoBusca = maquina.executar(listaFuncoes.get(count));
                 atualizarTabelaFita();
+                if (resultadoBusca == true) {
+                    break;
+                }
             }
-
         }
     }//GEN-LAST:event_jbIniciarActionPerformed
 
-    public void start() {
-//        try {
-//            maquina.executarMaquina();
-//            populateLists();
-//            populateTable();
-//        } catch (RuntimeException e) {
-//            if (e.toString().equals("java.lang.RuntimeException: error")) {
-//                GUIMessage.error("Palavra rejeitada!");
-//                jbLimparFita.setEnabled(false);
-//            }
-//            if (e.toString().equals("java.lang.RuntimeException: inf")) {
-//                GUIMessage.inf("O Programa entrou em estado de aceitação!");
-//                jbLimparFita.setEnabled(false);
-//            }
-//        }
-    }
+    private void jbRemoverEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverEstadoActionPerformed
+        int indiceSelecionado = jlEstados.getSelectedIndex();
+        if (indiceSelecionado != -1) {
+            listaEstadosTotal.remove(indiceSelecionado);
+            listaEstadosNome.remove(indiceSelecionado);
+            atualizarEstados();
+            ativarBotaoFuncao();
+        } else {
+            GUIMessage.error("Selecione um item para remover!");
+        }
+    }//GEN-LAST:event_jbRemoverEstadoActionPerformed
 
-    public void populateLists() {
-//        list_cabecote.clear();
-//        list_fita.clear();
-//        char[] temp_fita = maquina.getFita();
-//        for (int count = 0; count < temp_fita.length; count++) {
-//            list_fita.addElement(temp_fita[count]);
-//            if (maquina.getCabecote() == count) {
-//                list_cabecote.addElement("<--  " + maquina.getEstado());
-//            } else {
-//                list_cabecote.addElement(" ");
-//            }
-//        }
-    }
+    private void jbRemoverFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverFuncaoActionPerformed
+        int indiceSelecionado = jlFuncoes.getSelectedIndex();
+        if (indiceSelecionado != -1) {
+            listaFuncoes.remove(indiceSelecionado);
+            atualizarFuncoes();
+            atualizarTabelaMaquina();
+        } else {
+            GUIMessage.error("Selecione um item para remover!");
+        }
+    }//GEN-LAST:event_jbRemoverFuncaoActionPerformed
+
+    private void jbRemoverAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverAlfabetoActionPerformed
+        int indiceSelecionado = jlAlfabetos.getSelectedIndex();
+        if (indiceSelecionado != -1) {
+            alfabetos.getAlfabetos().remove(indiceSelecionado);
+            atualizarAlfabetos();
+        } else {
+            GUIMessage.error("Selecione um item para remover!");
+        }
+    }//GEN-LAST:event_jbRemoverAlfabetoActionPerformed
 
     public void atualizarEstados() {
         mlist_estados.clear();
@@ -592,6 +640,7 @@ public class MainScreen extends javax.swing.JFrame {
             for (int count = 0; count < listaEstadosNome.size(); count++) {
                 mlist_estados.addElement(listaEstadosNome.get(count));
             }
+            jbRemoverEstado.setEnabled(true);
         }
     }
 
@@ -606,6 +655,7 @@ public class MainScreen extends javax.swing.JFrame {
                 String direcao = temp_func.getDirecao();
                 mlist_funcoes.addElement("(" + atualEstado + ") " + "(" + proxEstado + ", " + escreve + ", " + direcao + ")");
             }
+            jbRemoverFuncao.setEnabled(true);
         }
     }
 
@@ -616,6 +666,7 @@ public class MainScreen extends javax.swing.JFrame {
             for (int count = 0; count < temp_listaAlfabetos.size(); count++) {
                 mlist_alfabetos.addElement(temp_listaAlfabetos.get(count));
             }
+            jbRemoverAlfabeto.setEnabled(true);
         }
         popularColunasTabela();
     }
@@ -635,9 +686,6 @@ public class MainScreen extends javax.swing.JFrame {
         tmFita.setRowCount(0);
         System.out.println("O cabecote esta em: " + TuringMachine.getCabecote());
         List linha = new ArrayList();
-//        for (int count = 0; count < maquina.getCabecote(); count++) {
-//            linha.add(" ");
-//        }
         for (int count = TuringMachine.getCabecote() - 3; count < fita.size(); count++) {
             if (count < 0) {
                 linha.add("");
@@ -707,21 +755,14 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
 
-    //    public void populateTable() {
-//        DefaultTableModel model = (DefaultTableModel) jtTabela.getModel();
-//        model.setRowCount(0);
-//        String[][] temp_historico = maquina.getHistorico();
-//        for (int count = 0; count < 9; count++) {
-//            model.addRow(new Object[]{"q" + count,
-//                temp_historico[count][0],
-//                temp_historico[count][1],
-//                temp_historico[count][2],
-//                temp_historico[count][3],
-//                temp_historico[count][4],
-//                temp_historico[count][5], /*temp_hijbTelaEstado*/});
-//
-//        }
-//    }
+    public void ativarBotaoFuncao() {
+        if (!listaEstadosNome.isEmpty() && !alfabetos.getAlfabetos().isEmpty() && !alfabetos.getAuxiliares().isEmpty()) {
+            jbTelaFuncao.setEnabled(true);
+        } else {
+            jbTelaFuncao.setEnabled(false);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -782,6 +823,9 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JButton jbInserirAlfabeto;
     private javax.swing.JButton jbInserirFita;
     private javax.swing.JButton jbLimparFita;
+    private javax.swing.JButton jbRemoverAlfabeto;
+    private javax.swing.JButton jbRemoverEstado;
+    private javax.swing.JButton jbRemoverFuncao;
     private javax.swing.JButton jbTelaEstado;
     private javax.swing.JButton jbTelaFuncao;
     private javax.swing.JList<String> jlAlfabetos;

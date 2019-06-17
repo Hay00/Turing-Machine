@@ -9,6 +9,7 @@ import code.AlfabetoTotal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import utilities.GUIMessage;
 
 /**
  *
@@ -25,10 +26,9 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
     /**
      * Creates new form AddAuxiliaryAlphabets
      */
-    public AddAuxiliaryAlphabets(MainScreen telaPai,java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
+    public AddAuxiliaryAlphabets(MainScreen telaPai, java.awt.Frame parent, boolean modal, AlfabetoTotal alfabetos) {
         super(parent, modal);
         initComponents();
-        
 
         // Iniciando models
         mlist_auxiliares = new DefaultListModel();
@@ -171,11 +171,16 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        alfabetos.setInicio(jtfLetraInicio.getText());
-        alfabetos.setVazio(jtfLetraVazio.getText());
-        alfabetos.setAuxiliares(temp_auxAlfabetos);
-        telaPai.atualizarAuxiliares();        
-        this.dispose();
+        if (!jtfLetraInicio.getText().trim().isEmpty() && !jtfLetraVazio.getText().trim().isEmpty() && !temp_auxAlfabetos.isEmpty()) {
+            alfabetos.setInicio(jtfLetraInicio.getText());
+            alfabetos.setVazio(jtfLetraVazio.getText());
+            alfabetos.setAuxiliares(temp_auxAlfabetos);
+            telaPai.atualizarAuxiliares();
+            telaPai.ativarBotaoFuncao();
+            this.dispose();
+        }else{
+            GUIMessage.error("Adicione um alfabeto auxiliar!");
+        }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbAdicionarAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarAuxiliarActionPerformed
@@ -188,18 +193,17 @@ public class AddAuxiliaryAlphabets extends javax.swing.JDialog {
         atualizarLista();
     }//GEN-LAST:event_jbRemoverAuxiliarActionPerformed
 
-    private void setarCaixasTexto(){
+    private void setarCaixasTexto() {
         jtfLetraInicio.setText(alfabetos.getInicio());
         jtfLetraVazio.setText(alfabetos.getVazio());
     }
-    
+
     public void atualizarLista() {
         mlist_auxiliares.clear();
         for (int count = 0; count < temp_auxAlfabetos.size(); count++) {
             mlist_auxiliares.addElement(temp_auxAlfabetos.get(count));
         }
     }
- 
 
     /**
      * @param args the command line arguments

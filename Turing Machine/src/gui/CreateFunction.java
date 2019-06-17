@@ -9,6 +9,7 @@ import code.AlfabetoTotal;
 import java.util.List;
 import code.Funcao;
 import javax.swing.DefaultListModel;
+import utilities.GUIMessage;
 
 /**
  *
@@ -26,8 +27,8 @@ public class CreateFunction extends javax.swing.JDialog {
     private DefaultListModel mlist_estadosAtuais;
     private DefaultListModel mlist_estadosProximo;
     private DefaultListModel mlist_funcoes;
-    private DefaultListModel mlist_alfabetos;
-    private DefaultListModel mlist_alfabetosAuxiliares;
+    private DefaultListModel mlist_leitura;
+    private DefaultListModel mlist_escrita;
 
     // Váriaveis temporarias
     private String inicio;
@@ -51,8 +52,8 @@ public class CreateFunction extends javax.swing.JDialog {
         mlist_estadosAtuais = new DefaultListModel();
         mlist_estadosProximo = new DefaultListModel();
         mlist_funcoes = new DefaultListModel();
-        mlist_alfabetos = new DefaultListModel();
-        mlist_alfabetosAuxiliares = new DefaultListModel();
+        mlist_leitura = new DefaultListModel();
+        mlist_escrita = new DefaultListModel();
 
         // Setando objetos repassados
         this.listaFuncoes = listaFuncoes;
@@ -65,16 +66,18 @@ public class CreateFunction extends javax.swing.JDialog {
         // Setando models para Jlists
         jlSelecEstadoAtual.setModel(mlist_estadosAtuais);
         jlSelecProxEstado.setModel(mlist_estadosProximo);
-        jlLeitura.setModel(mlist_alfabetos);
-        jlEscrita.setModel(mlist_alfabetosAuxiliares);
+        jlLeitura.setModel(mlist_leitura);
+        jlEscrita.setModel(mlist_escrita);
 
+        jbCriarFuncao.setEnabled(false);
+        
         // Setando váriaveis locais temporárias
         this.estadoAtual = null;
         this.estadoProx = null;
         this.direcao = null;
         this.leitura = null;
         this.escrita = null;
-
+        
         mostrarItens();
     }
 
@@ -262,24 +265,29 @@ public class CreateFunction extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGerarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGerarFuncaoActionPerformed
+        
         this.direcao = jcDirecao.getSelectedItem().toString();
         this.estadoAtual = jlSelecEstadoAtual.getSelectedValue();
         this.estadoProx = jlSelecProxEstado.getSelectedValue();
         this.leitura = jlLeitura.getSelectedValue();
         this.escrita = jlEscrita.getSelectedValue();
-        jtfResultadoFuncao.setText(estadoAtual + ": (" + estadoProx + ", " + escrita + ", " + jcDirecao.getSelectedItem().toString() + ")");
-        jbCriarFuncao.setEnabled(true);
+        if (direcao != null && estadoAtual != null && estadoProx != null && leitura != null && escrita != null) {
+            jtfResultadoFuncao.setText(estadoAtual + ": (" + estadoProx + ", " + escrita + ", " + jcDirecao.getSelectedItem().toString() + ")");
+            jbCriarFuncao.setEnabled(true);
+        } else {
+            GUIMessage.error("Selecione um item em cada lista!");
+        }
     }//GEN-LAST:event_jbGerarFuncaoActionPerformed
 
     private void jbCriarFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarFuncaoActionPerformed
-
+        
         Funcao funcTemp = new Funcao(leitura, escrita, estadoAtual, estadoProx, direcao);
         listaFuncoes.add(funcTemp);
         telaPai.atualizarFuncoes();
         telaPai.atualizarTabelaMaquina();
         this.dispose();
     }//GEN-LAST:event_jbCriarFuncaoActionPerformed
-
+    
     private void mostrarItens() {
         for (int count = 0; count < listaEstados.size(); count++) {
             mlist_estadosAtuais.addElement(listaEstados.get(count));
@@ -287,24 +295,24 @@ public class CreateFunction extends javax.swing.JDialog {
         }
 
         // Lista de leitura
-        mlist_alfabetos.addElement(inicio);
+        mlist_leitura.addElement(inicio);
         for (int count = 0; count < listaAlfabetos.size(); count++) {
-            mlist_alfabetos.addElement(listaAlfabetos.get(count));
+            mlist_leitura.addElement(listaAlfabetos.get(count));
         }
-        for (int count = 0; count < listaAlfabetos.size(); count++) {
-            mlist_alfabetos.addElement(listaAuxiliares.get(count));
+        for (int count = 0; count < listaAuxiliares.size(); count++) {
+            mlist_leitura.addElement(listaAuxiliares.get(count));
         }
-        mlist_alfabetos.addElement(vazio);
+        mlist_leitura.addElement(vazio);
 
         // Lista de escrita
-        mlist_alfabetosAuxiliares.addElement(inicio);
-        for (int count = 0; count < listaAuxiliares.size(); count++) {
-            mlist_alfabetosAuxiliares.addElement(listaAlfabetos.get(count));
+        mlist_escrita.addElement(inicio);
+        for (int count = 0; count < listaAlfabetos.size(); count++) {
+            mlist_escrita.addElement(listaAlfabetos.get(count));
         }
         for (int count = 0; count < listaAuxiliares.size(); count++) {
-            mlist_alfabetosAuxiliares.addElement(listaAuxiliares.get(count));
+            mlist_escrita.addElement(listaAuxiliares.get(count));
         }
-        mlist_alfabetosAuxiliares.addElement(vazio);
+        mlist_escrita.addElement(vazio);
     }
 
     /**
